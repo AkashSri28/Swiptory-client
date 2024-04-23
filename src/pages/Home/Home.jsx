@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import './Home.css'; // Import CSS file for styling
 import axios from 'axios';
+import { useAuth } from '../../context/authContext';
+import { slide as Menu } from 'react-burger-menu';
 
 const Home = () => {
 
@@ -16,6 +18,8 @@ const Home = () => {
 
     const [registrationError, setRegistrationError] = useState('');
     const [loginError, setLoginError] = useState('');
+
+    const { isLoggedIn, logout, login } = useAuth(); 
 
     const handleRegistrationSubmit = async (e) => {
         e.preventDefault();
@@ -34,15 +38,12 @@ const Home = () => {
               // Registration successful
               const data = response.data;
               console.log('Registration successful');
-              console.log('Token:', data.token); // Store this token in local storage
-              console.log('User:', data.user);
+              login(data.user, data.token);
               // Reset the form fields
               setUsername('');
               setPassword('');
               // Close the modal
               handleRegistrationCloseModal();
-              localStorage.setItem('token', data.token);
-              localStorage.setItem('user', JSON.stringify(data.user));
             } else {
               // Registration failed
               console.error('Registration failed');
@@ -114,6 +115,12 @@ const Home = () => {
         setSelectedCategory(category);
     };
 
+    // Function to handle logout
+    const handleLogout = () => {
+      logout(); 
+    };
+
+
   return (
     <div className="home">
       {/* Header */}
@@ -121,10 +128,21 @@ const Home = () => {
         <div className="logo">
           <h1>SwipTory</h1>
         </div>
-        <div className="auth-buttons">
+        {isLoggedIn?(
+          <div className="user-profile">
+            <button className="profile-button">Bookmarks</button>
+            <button className="profile-button">Add Story</button>
+            <img src="profile-picture.jpg" alt="Profile" className="profile-picture" />
+            <Menu isOpen={true} width={ '300px' } right>
+              <button className="menu-button" onClick={handleLogout}>Logout</button>
+            </Menu>
+          </div>
+        ):(
+          <div className="auth-buttons">
             <button className="register-button" onClick={handleRegisterClick}>Register Now</button>
             <button className="login-button" onClick={handleLoginClick}>Login</button>
-        </div>
+          </div>
+        )}
       </header>
 
       {/* Registration Modal */}

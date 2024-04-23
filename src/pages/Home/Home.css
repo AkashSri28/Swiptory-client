@@ -38,6 +38,85 @@
     background-color: #73ABFF; /* Blue */
   }
 
+  .user-profile {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile-button {
+    margin-right: 10px;
+  }
+  
+  .profile-picture {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .menu-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* HamburgerMenu.css */
+
+  .bm-burger-button {
+  position: sticky;
+  width: 20px;
+  height: 15px;
+  right: 20px;
+  top: 20px;
+} 
+
+.bm-burger-bars {
+  background: #000;
+}
+
+.bm-menu-wrap {
+  position: fixed;
+  height: 20%;
+}
+
+.bm-menu {
+  background: #fff;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+}
+
+.bm-overlay {
+  display: none;
+}
+
+/* .bm-cross-button {
+  height: 24px;
+  width: 24px;
+}
+
+.bm-cross {
+  background: #fff;
+}
+
+
+
+
+
+.bm-morph-shape {
+  fill: #373a47;
+}
+
+.bm-item-list {
+  color: #b8b7ad;
+  padding: 0.8em;
+}
+
+.bm-item {
+  display: inline-block;
+}
+
+ */ 
+ 
 /* Modal */
 .modal {
     display: block;
