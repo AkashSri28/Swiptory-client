@@ -1,10 +1,11 @@
 // Home.jsx
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Home.css'; // Import CSS file for styling
 import axios from 'axios';
 import { useAuth } from '../../context/authContext';
 import { slide as Menu } from 'react-burger-menu';
+import AddStoryModal from '../../components/AddModalStory/AddStoryModal';
 
 const Home = () => {
 
@@ -19,7 +20,33 @@ const Home = () => {
     const [registrationError, setRegistrationError] = useState('');
     const [loginError, setLoginError] = useState('');
 
-    const { isLoggedIn, logout, login } = useAuth(); 
+    const { isLoggedIn, logout, login, user, token } = useAuth(); 
+
+    const [showAddStoryModal, setShowAddStoryModal] = useState(false);
+
+    const [userStories, setUserStories] = useState([]);
+  
+
+
+    useEffect(() => {
+      if (isLoggedIn) {
+          fetchUserStories();
+      }
+  }, [isLoggedIn]);
+
+    const fetchUserStories = async () => {
+        try {
+            const response = await axios.get('http://localhost:4000/api/story/user',{
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            });
+            console.log(response.data.stories)
+            setUserStories(response.data.stories);
+        } catch (error) {
+            console.error('Error fetching user stories:', error);
+        }
+    };
 
     const handleRegistrationSubmit = async (e) => {
         e.preventDefault();
@@ -120,6 +147,18 @@ const Home = () => {
       logout(); 
     };
 
+    const handleAddStoryClick = () => {
+      setShowAddStoryModal(true);
+    };
+
+    const handleAddStoryCloseModal = () => {
+      setShowAddStoryModal(false);
+    };
+
+    const handleStoryClick = () => {
+
+    }
+
 
   return (
     <div className="home">
@@ -131,9 +170,10 @@ const Home = () => {
         {isLoggedIn?(
           <div className="user-profile">
             <button className="profile-button">Bookmarks</button>
-            <button className="profile-button">Add Story</button>
+            <button className="profile-button" onClick={handleAddStoryClick}>Add Story</button>
             <img src="profile-picture.jpg" alt="Profile" className="profile-picture" />
-            <Menu isOpen={true} width={ '300px' } right>
+            <Menu isOpen={false} width={ '300px' } right>
+              <p className="username">{user.username}</p>
               <button className="menu-button" onClick={handleLogout}>Logout</button>
             </Menu>
           </div>
@@ -144,6 +184,8 @@ const Home = () => {
           </div>
         )}
       </header>
+
+      <AddStoryModal isOpen={showAddStoryModal} onClose={handleAddStoryCloseModal} />
 
       {/* Registration Modal */}
       {showRegistrationModal && (
@@ -231,6 +273,27 @@ const Home = () => {
             Education
         </div>
       </section>
+
+      {/* Your Stories */}
+      {isLoggedIn && (
+          <section id="user-stories" className="user-stories">
+              <h2>Your Stories</h2>
+              <div className="stories-list">
+                  {userStories.map((story, index) => (
+                      <div key={index} className="story" onClick={() => handleStoryClick(story)}>
+                        <div className="story-content">
+                          {/* <h3>{story.forms[0].heading}</h3>
+                          <p>{story.forms[0].description}</p> */}
+                          <img src={story.forms[0].image} alt={story.forms[0].heading} />
+                          {/* <p>Category: {story.forms[0].category}</p> */}
+                        </div>
+                          
+                      </div>
+                  ))}
+              </div>
+          </section>
+      )}
+
 
       {/* Stories by Category */}
 

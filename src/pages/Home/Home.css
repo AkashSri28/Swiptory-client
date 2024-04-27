@@ -44,21 +44,41 @@
   }
   
   .profile-button {
-    margin-right: 10px;
+    background-color: #FF7373;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 8px 20px;
+    text-align: center;
+    margin-right: 20px;
   }
   
   .profile-picture {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    margin-right: 10px;
+    margin-right: 15px;
   }
   
   .menu-button {
-    background-color: transparent;
+    background-color: #FF7373;
+    color: #fff;
     border: none;
+    border-radius: 20px;
     cursor: pointer;
+    font-size: 13px;
+    padding: 8px 20px;
+    text-align: center;
+    margin: 0 auto;
   }
+
+.username {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 15px;
+}
 
   /* HamburgerMenu.css */
 
@@ -68,6 +88,7 @@
   height: 15px;
   right: 20px;
   top: 20px;
+  z-index: 0 !important;
 } 
 
 .bm-burger-bars {
@@ -76,46 +97,20 @@
 
 .bm-menu-wrap {
   position: fixed;
-  height: 20%;
+  top: 70px !important;
 }
 
 .bm-menu {
   background: #fff;
-  padding: 2.5em 1.5em 0;
+  padding: 1.5em 1em;
   font-size: 1.15em;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  height: fit-content !important;
 }
 
 .bm-overlay {
   display: none;
 }
-
-/* .bm-cross-button {
-  height: 24px;
-  width: 24px;
-}
-
-.bm-cross {
-  background: #fff;
-}
-
-
-
-
-
-.bm-morph-shape {
-  fill: #373a47;
-}
-
-.bm-item-list {
-  color: #b8b7ad;
-  padding: 0.8em;
-}
-
-.bm-item {
-  display: inline-block;
-}
-
- */ 
  
 /* Modal */
 .modal {
@@ -164,6 +159,44 @@
     font-size: 1.2rem;
   }
   
+/* User stories */
+.story {
+  display: inline-block;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.story-content {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  position: relative;
+  width: 100%;
+  padding-top: calc(100% * 5 / 4); /* 16:9 aspect ratio */
+  overflow: hidden;
+}
+
+.story img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.user-stories {
+  margin-top: 20px;
+}
+
+.stories-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+
   /* Category story styles */
   .category-stories {
     padding: 20px;
