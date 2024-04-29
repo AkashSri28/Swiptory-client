@@ -6,10 +6,12 @@ import axios from 'axios';
 import { useAuth } from '../../context/authContext';
 import { slide as Menu } from 'react-burger-menu';
 import AddStoryModal from '../../components/AddModalStory/AddStoryModal';
+import { FaRegEdit } from "react-icons/fa";
 
 const Home = () => {
 
     const [selectedCategory, setSelectedCategory] = useState('All');
+    const [categoryStories, setCategoryStories] = useState([]);
 
     const [showRegistrationModal, setShowRegistrationModal] = useState(false);
     const [showLoginModal, setShowLoginModal] = useState(false);
@@ -26,7 +28,21 @@ const Home = () => {
 
     const [userStories, setUserStories] = useState([]);
   
+    useEffect(() => {
+      fetchAllStories();
+      console.log(categoryStories)
+    },[]);
 
+    const fetchAllStories = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/api/story/category/All');
+        if (response.status === 200) {
+          setCategoryStories(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching all stories:', error);
+      }
+    };
 
     useEffect(() => {
       if (isLoggedIn) {
@@ -41,7 +57,6 @@ const Home = () => {
                 'Authorization': `Bearer ${token}`
               }
             });
-            console.log(response.data.stories)
             setUserStories(response.data.stories);
         } catch (error) {
             console.error('Error fetching user stories:', error);
@@ -138,8 +153,14 @@ const Home = () => {
         setPassword('');
     };
 
-    const handleCategoryClick = (category) => {
+    const handleCategoryClick = async (category) => {
         setSelectedCategory(category);
+        // try {
+        //   const response = await axios.get(`http://localhost:4000/api/story/category/${category}`);
+        //   setCategoryStories(response.data);
+        // } catch (error) {
+        //   console.error('Error fetching stories by category:', error);
+        // }
     };
 
     // Function to handle logout
@@ -281,9 +302,12 @@ const Home = () => {
               <div className="stories-list">
                   {userStories.map((story, index) => (
                       <div key={index} className="story" onClick={() => handleStoryClick(story)}>
+                        {isLoggedIn && story.user === user._id && (
+                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        )}
                         <div className="story-content">
-                          {/* <h3>{story.forms[0].heading}</h3>
-                          <p>{story.forms[0].description}</p> */}
+                          <h3>{story.forms[0].heading}</h3>
+                          <p>{story.forms[0].description}</p>
                           <img src={story.forms[0].image} alt={story.forms[0].heading} />
                           {/* <p>Category: {story.forms[0].category}</p> */}
                         </div>
@@ -300,37 +324,133 @@ const Home = () => {
       <section id="categories" className="categories">
         {(selectedCategory === 'All' || selectedCategory === 'Food') && (
             <div className="category">
-            <h2>Food</h2>
-            <h3>No stories available</h3>
-            {/* Stories for Food category */}
+              <h2>Food</h2>
+              {categoryStories.filter((story) => story.category === 'Food').length > 0 ? (
+              <div className="stories-list">
+                {categoryStories
+                  .filter((story) => story.category === 'Food')
+                  .map((story, index) => (
+                    <div key={index} className="story" onClick={() => handleStoryClick(story)}>
+                      {isLoggedIn && story.user === user._id && (
+                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        )}
+                      <div className="story-content">
+                        <h3>{story.forms[0].heading}</h3>
+                        <p>{story.forms[0].description}</p>
+                        <img src={story.forms[0].image} alt={story.forms[0].heading} />
+                        <p>Category: {story.forms[0].category}</p>
+
+                      </div>
+                    </div>
+                  ))}
+              </div>
+              ) : (
+                <h3>No stories available</h3>
+              )}
             </div>
         )}
         {(selectedCategory === 'All' || selectedCategory === 'Health and Fitness') && (
             <div className="category">
             <h2>Health and Fitness</h2>
-            <h3>No stories available</h3>
-            {/* Stories for Health and Fitness category */}
+            {categoryStories.filter((story) => story.category === 'Health and Fitness').length > 0 ? (
+              <div className="stories-list">
+                {categoryStories
+                  .filter((story) => story.category === 'Health and Fitness')
+                  .map((story, index) => (
+                    <div key={index} className="story" onClick={() => handleStoryClick(story)}>
+                      {isLoggedIn && story.user === user._id && (
+                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        )}
+                      <div className="story-content">
+                        <h3>{story.forms[0].heading}</h3>
+                        <p>{story.forms[0].description}</p>
+                        <img src={story.forms[0].image} alt={story.forms[0].heading} />
+                        <p>Category: {story.forms[0].category}</p>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+              ) : (
+                <h3>No stories available</h3>
+              )}
             </div>
         )}
         {(selectedCategory === 'All' || selectedCategory === 'Travel') && (
             <div className="category">
             <h2>Travel</h2>
-            <h3>No stories available</h3>
-            {/* Stories for Travel category */}
+            {categoryStories.filter((story) => story.category === 'Travel').length > 0 ? (
+              <div className="stories-list">
+                {categoryStories
+                  .filter((story) => story.category === 'Travel')
+                  .map((story, index) => (
+                    <div key={index} className="story" onClick={() => handleStoryClick(story)}>
+                      {isLoggedIn && story.user === user._id && (
+                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        )}
+                      <div className="story-content">
+                        <h3>{story.forms[0].heading}</h3>
+                        <p>{story.forms[0].description}</p>
+                        <img src={story.forms[0].image} alt={story.forms[0].heading} />
+                        <p>Category: {story.forms[0].category}</p>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+              ) : (
+                <h3>No stories available</h3>
+              )}
             </div>
         )}
         {(selectedCategory === 'All' || selectedCategory === 'Movies') && (
             <div className="category">
             <h2>Movies</h2>
-            <h3>No stories available</h3>
-            {/* Stories for Movies category */}
+            {categoryStories.filter((story) => story.category === 'Movies').length > 0 ? (
+              <div className="stories-list">
+                {categoryStories
+                  .filter((story) => story.category === 'Movies')
+                  .map((story, index) => (
+                    <div key={index} className="story" onClick={() => handleStoryClick(story)}>
+                      {isLoggedIn && story.user === user._id && (
+                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        )}
+                      <div className="story-content">
+                        <h3>{story.forms[0].heading}</h3>
+                        <p>{story.forms[0].description}</p>
+                        <img src={story.forms[0].image} alt={story.forms[0].heading} />
+                        <p>Category: {story.forms[0].category}</p>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+              ) : (
+                <h3>No stories available</h3>
+              )}
             </div>
         )}
         {(selectedCategory === 'All' || selectedCategory === 'Education') && (
             <div className="category">
             <h2>Education</h2>
-            <h3>No stories available</h3>
-            {/* Stories for Education category */}
+            {categoryStories.filter((story) => story.category === 'Education').length > 0 ? (
+              <div className="stories-list">
+                {categoryStories
+                  .filter((story) => story.category === 'Education')
+                  .map((story, index) => (
+                    <div key={index} className="story" onClick={() => handleStoryClick(story)}>
+                      {isLoggedIn && story.user === user._id && (
+                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        )}
+                      <div className="story-content">
+                        <h3>{story.forms[0].heading}</h3>
+                        <p>{story.forms[0].description}</p>
+                        <img src={story.forms[0].image} alt={story.forms[0].heading} />
+                        <p>Category: {story.forms[0].category}</p>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+              ) : (
+                <h3>No stories available</h3>
+              )}
             </div>
         )}
      

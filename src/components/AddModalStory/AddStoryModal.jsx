@@ -40,18 +40,6 @@ const AddStoryModal = ({ isOpen, onClose }) => {
         setCurrentForm(currentForm + 1);
       };
     
-      const handleAddStory = () => {
-        // Here you can send the story data to your backend
-        console.log('Adding story...', storyForms[currentForm]);
-        // Clear the current form fields
-        setStoryForms([
-          ...storyForms.slice(0, currentForm),
-          { heading: '', description: '', image: '', category: '' },
-          ...storyForms.slice(currentForm + 1),
-        ]);
-        // If you want to close the modal after adding a story, you can call onClose here
-        // onClose();
-      };
 
       const handleTabClick = (index) => {
         setCurrentForm(index);
@@ -75,7 +63,8 @@ const AddStoryModal = ({ isOpen, onClose }) => {
         try {
           console.log(storyForms)
           await axios.post('http://localhost:4000/api/story/add', {
-            storyForms
+            storyForms,
+            category
           },{
             headers: {
               'Authorization': `Bearer ${token}`
