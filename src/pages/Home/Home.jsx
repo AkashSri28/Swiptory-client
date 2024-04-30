@@ -7,6 +7,7 @@ import { useAuth } from '../../context/authContext';
 import { slide as Menu } from 'react-burger-menu';
 import AddStoryModal from '../../components/AddModalStory/AddStoryModal';
 import { FaRegEdit } from "react-icons/fa";
+import EditStoryModal from '../../components/EditStoryModal/EditStoryModal';
 
 const Home = () => {
 
@@ -25,8 +26,11 @@ const Home = () => {
     const { isLoggedIn, logout, login, user, token } = useAuth(); 
 
     const [showAddStoryModal, setShowAddStoryModal] = useState(false);
+    const [showEditStoryModal, setShowEditStoryModal] = useState(false);
 
     const [userStories, setUserStories] = useState([]);
+
+    const [selectedStory, setSelectedStory] = useState(null);
   
     useEffect(() => {
       fetchAllStories();
@@ -180,6 +184,16 @@ const Home = () => {
 
     }
 
+     // Function to open the EditStoryModal
+     const handleEditStory = (story) => {
+      setSelectedStory(story);
+      setShowEditStoryModal(true);
+    };
+
+    const handleEditStoryCloseModal = () => {
+      setShowEditStoryModal(false);
+    };
+
 
   return (
     <div className="home">
@@ -207,6 +221,7 @@ const Home = () => {
       </header>
 
       <AddStoryModal isOpen={showAddStoryModal} onClose={handleAddStoryCloseModal} />
+      <EditStoryModal isOpen={showEditStoryModal} onClose={handleEditStoryCloseModal} story={selectedStory} /> {/* Pass selected story to EditStoryModal */}
 
       {/* Registration Modal */}
       {showRegistrationModal && (
@@ -302,15 +317,17 @@ const Home = () => {
               <div className="stories-list">
                   {userStories.map((story, index) => (
                       <div key={index} className="story" onClick={() => handleStoryClick(story)}>
-                        {isLoggedIn && story.user === user._id && (
-                          <button className="edit-button"><FaRegEdit /> Edit</button>
-                        )}
+                        
                         <div className="story-content">
+                        
                           <h3>{story.forms[0].heading}</h3>
                           <p>{story.forms[0].description}</p>
                           <img src={story.forms[0].image} alt={story.forms[0].heading} />
                           {/* <p>Category: {story.forms[0].category}</p> */}
                         </div>
+                        {isLoggedIn && story.user === user._id && (
+                          <button className="edit-button" onClick={(e) => { e.stopPropagation(); handleEditStory(story); }}><FaRegEdit /> Edit</button>
+                        )}
                           
                       </div>
                   ))}
@@ -331,9 +348,7 @@ const Home = () => {
                   .filter((story) => story.category === 'Food')
                   .map((story, index) => (
                     <div key={index} className="story" onClick={() => handleStoryClick(story)}>
-                      {isLoggedIn && story.user === user._id && (
-                          <button className="edit-button"><FaRegEdit /> Edit</button>
-                        )}
+                      
                       <div className="story-content">
                         <h3>{story.forms[0].heading}</h3>
                         <p>{story.forms[0].description}</p>
@@ -341,6 +356,9 @@ const Home = () => {
                         <p>Category: {story.forms[0].category}</p>
 
                       </div>
+                      {isLoggedIn && story.user === user._id && (
+                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        )}
                     </div>
                   ))}
               </div>
@@ -358,15 +376,16 @@ const Home = () => {
                   .filter((story) => story.category === 'Health and Fitness')
                   .map((story, index) => (
                     <div key={index} className="story" onClick={() => handleStoryClick(story)}>
-                      {isLoggedIn && story.user === user._id && (
-                          <button className="edit-button"><FaRegEdit /> Edit</button>
-                        )}
+                      
                       <div className="story-content">
                         <h3>{story.forms[0].heading}</h3>
                         <p>{story.forms[0].description}</p>
                         <img src={story.forms[0].image} alt={story.forms[0].heading} />
                         <p>Category: {story.forms[0].category}</p>
                       </div>
+                      {isLoggedIn && story.user === user._id && (
+                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        )}
                     </div>
                   ))}
               </div>
@@ -384,15 +403,16 @@ const Home = () => {
                   .filter((story) => story.category === 'Travel')
                   .map((story, index) => (
                     <div key={index} className="story" onClick={() => handleStoryClick(story)}>
-                      {isLoggedIn && story.user === user._id && (
-                          <button className="edit-button"><FaRegEdit /> Edit</button>
-                        )}
+                      
                       <div className="story-content">
                         <h3>{story.forms[0].heading}</h3>
                         <p>{story.forms[0].description}</p>
                         <img src={story.forms[0].image} alt={story.forms[0].heading} />
                         <p>Category: {story.forms[0].category}</p>
                       </div>
+                      {isLoggedIn && story.user === user._id && (
+                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        )}
                     </div>
                   ))}
               </div>
@@ -410,15 +430,16 @@ const Home = () => {
                   .filter((story) => story.category === 'Movies')
                   .map((story, index) => (
                     <div key={index} className="story" onClick={() => handleStoryClick(story)}>
-                      {isLoggedIn && story.user === user._id && (
-                          <button className="edit-button"><FaRegEdit /> Edit</button>
-                        )}
+                      
                       <div className="story-content">
                         <h3>{story.forms[0].heading}</h3>
                         <p>{story.forms[0].description}</p>
                         <img src={story.forms[0].image} alt={story.forms[0].heading} />
                         <p>Category: {story.forms[0].category}</p>
                       </div>
+                      {isLoggedIn && story.user === user._id && (
+                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        )}
                     </div>
                   ))}
               </div>
@@ -436,15 +457,17 @@ const Home = () => {
                   .filter((story) => story.category === 'Education')
                   .map((story, index) => (
                     <div key={index} className="story" onClick={() => handleStoryClick(story)}>
-                      {isLoggedIn && story.user === user._id && (
-                          <button className="edit-button"><FaRegEdit /> Edit</button>
-                        )}
+                      
                       <div className="story-content">
+                      
                         <h3>{story.forms[0].heading}</h3>
                         <p>{story.forms[0].description}</p>
                         <img src={story.forms[0].image} alt={story.forms[0].heading} />
                         <p>Category: {story.forms[0].category}</p>
                       </div>
+                      {isLoggedIn && story.user === user._id && (
+                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        )}
                     </div>
                   ))}
               </div>
