@@ -62,7 +62,7 @@ const AddStoryModal = ({ isOpen, onClose }) => {
     
         try {
           console.log(storyForms)
-          await axios.post('http://localhost:4000/api/story/add', {
+          await axios.post('https://swiptory-server-fm7r.onrender.com/api/story/add', {
             storyForms,
             category
           },{
@@ -70,7 +70,6 @@ const AddStoryModal = ({ isOpen, onClose }) => {
               'Authorization': `Bearer ${token}`
             }
           });
-          alert('Story posted successfully!');
           onClose();
         } catch (error) {
           console.error('Error posting story:', error);
@@ -88,14 +87,14 @@ const AddStoryModal = ({ isOpen, onClose }) => {
             </button>
             <div className="story-form">
 
-            {storyForms.map((form, index) => (
+              {storyForms.map((form, index) => (
                 <div key={index} className={`form-tab ${index === currentForm ? 'active' : ''}`} onClick={() => handleTabClick(index)}>
-                Slide {index + 1}
-                {index > 2 && (
-                  <button className="cancel-form-button" onClick={() => handleCancelForm(index)}>
-                    &times;
-                  </button>
-                )}
+                  Slide {index + 1}
+                  {index > 2 && (
+                    <button className="cancel-form-button" onClick={() => handleCancelForm(index)}>
+                      &times;
+                    </button>
+                  )}
                 </div>
             ))}
             {storyForms.length < 6 && (

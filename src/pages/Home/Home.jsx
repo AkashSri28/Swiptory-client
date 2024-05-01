@@ -8,6 +8,7 @@ import { slide as Menu } from 'react-burger-menu';
 import AddStoryModal from '../../components/AddModalStory/AddStoryModal';
 import { FaRegEdit } from "react-icons/fa";
 import EditStoryModal from '../../components/EditStoryModal/EditStoryModal';
+import ViewStoryModal from '../../components/ViewStoryModal/ViewStoryModal';
 
 const Home = () => {
 
@@ -27,6 +28,7 @@ const Home = () => {
 
     const [showAddStoryModal, setShowAddStoryModal] = useState(false);
     const [showEditStoryModal, setShowEditStoryModal] = useState(false);
+    const [showViewStoryModal, setShowViewStoryModal] = useState(false);
 
     const [userStories, setUserStories] = useState([]);
 
@@ -39,7 +41,7 @@ const Home = () => {
 
     const fetchAllStories = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/story/category/All');
+        const response = await axios.get('https://swiptory-server-fm7r.onrender.com/api/story/category/All');
         if (response.status === 200) {
           setCategoryStories(response.data);
         }
@@ -56,7 +58,7 @@ const Home = () => {
 
     const fetchUserStories = async () => {
         try {
-            const response = await axios.get('http://localhost:4000/api/story/user',{
+            const response = await axios.get('https://swiptory-server-fm7r.onrender.com/api/story/user',{
               headers: {
                 'Authorization': `Bearer ${token}`
               }
@@ -75,7 +77,7 @@ const Home = () => {
         }
         
         try {
-            const response = await axios.post('http://localhost:4000/api/user/register', {
+            const response = await axios.post('https://swiptory-server-fm7r.onrender.com/api/user/register', {
                 username,
                 password,
             });
@@ -108,7 +110,7 @@ const Home = () => {
         }
         
         try {
-            const response = await axios.post('http://localhost:4000/api/user/login', {
+            const response = await axios.post('https://swiptory-server-fm7r.onrender.com/api/user/login', {
                 username,
                 password,
             });
@@ -160,7 +162,7 @@ const Home = () => {
     const handleCategoryClick = async (category) => {
         setSelectedCategory(category);
         // try {
-        //   const response = await axios.get(`http://localhost:4000/api/story/category/${category}`);
+        //   const response = await axios.get(`https://swiptory-server-fm7r.onrender.com/api/story/category/${category}`);
         //   setCategoryStories(response.data);
         // } catch (error) {
         //   console.error('Error fetching stories by category:', error);
@@ -180,18 +182,26 @@ const Home = () => {
       setShowAddStoryModal(false);
     };
 
-    const handleStoryClick = () => {
-
+    const handleStoryClick = (story) => {
+      setSelectedStory(story);
+      setShowViewStoryModal(true);
     }
 
      // Function to open the EditStoryModal
      const handleEditStory = (story) => {
+      console.log(story)
       setSelectedStory(story);
       setShowEditStoryModal(true);
     };
 
     const handleEditStoryCloseModal = () => {
       setShowEditStoryModal(false);
+      setSelectedStory(null);
+    };
+
+    const handleCloseViewStoryModal = () => {
+      setShowViewStoryModal(false);
+      setSelectedStory(null);
     };
 
 
@@ -221,7 +231,15 @@ const Home = () => {
       </header>
 
       <AddStoryModal isOpen={showAddStoryModal} onClose={handleAddStoryCloseModal} />
-      <EditStoryModal isOpen={showEditStoryModal} onClose={handleEditStoryCloseModal} story={selectedStory} /> {/* Pass selected story to EditStoryModal */}
+      <EditStoryModal isOpen={showEditStoryModal} onClose={handleEditStoryCloseModal} story={selectedStory} />
+
+      <ViewStoryModal
+        isOpen={showViewStoryModal}
+        onClose={handleCloseViewStoryModal}
+        story={selectedStory}
+      />
+
+
 
       {/* Registration Modal */}
       {showRegistrationModal && (

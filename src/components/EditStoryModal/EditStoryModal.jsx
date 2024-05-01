@@ -3,21 +3,34 @@
 import React, { useEffect, useState } from 'react';
 import './EditStoryModal.css'; // Import CSS file for styling
 import axios from 'axios';
+import { useAuth } from '../../context/authContext';
 
 const EditStoryModal = ({ isOpen, onClose, story }) => {
   const [storyForms, setStoryForms] = useState([]);
   const [category, setCategory] = useState('');
+  const [storyId, setStoryId] = useState('')
+
+  const {token} = useAuth();
 
   useEffect(() => {
     console.log(story);
     if (story && story.forms) {
       setStoryForms(story.forms);
-      setCategory(story.category)
+      setCategory(story.category);
+      setStoryId(story._id);
     }
   }, [story]);
 
 
   const [currentForm, setCurrentForm] = useState(0);
+
+  const handlePrevious = () => {
+    setCurrentForm(currentForm - 1);
+  };
+
+  const handleNext = () => {
+    setCurrentForm(currentForm + 1);
+  };
 
   const handleTabClick = (index) => {
     setCurrentForm(index);
@@ -43,8 +56,7 @@ const EditStoryModal = ({ isOpen, onClose, story }) => {
     const newForm = {
       heading: '',
       description: '',
-      image: '',
-      category: storyForms[0].category,
+      image: ''
     };
     setStoryForms([...storyForms, newForm]);
   };
@@ -57,10 +69,16 @@ const EditStoryModal = ({ isOpen, onClose, story }) => {
 
   const handlePost = async () => {
     try {
-      const response = await axios.post('http://localhost:4000/api/story/edit', {
+      const response = await axios.post('https://swiptory-server-fm7r.onrender.com/api/story/edit', {
+        storyId,
         storyForms,
+        category
+      },{
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       });
-      if (response.status === 201) {
+      if (response.status === 200) {
         console.log('Story updated successfully');
         onClose(); // Close the modal
       } else {
@@ -79,22 +97,26 @@ const EditStoryModal = ({ isOpen, onClose, story }) => {
             <span className="close" onClick={onClose}>
               &times;
             </span>
-            <h2>Edit Story</h2>
-            <div className="form-tabs">
+            <div className="story-form">
               {storyForms.map((form, index) => (
                 <div
                   key={index}
                   className={`form-tab ${index === currentForm ? 'active' : ''}`}
                   onClick={() => handleTabClick(index)}
                 >
-                  {index + 1}
-                  {storyForms.length > 1 && (
-                    <button className="cancel-button" onClick={() => handleRemoveForm(index)}>
-                      Cancel
+                  Slide {index + 1}
+                  {index > 2 && (
+                    <button className="cancel-form-button" onClick={() => handleRemoveForm(index)}>
+                      &times;
                     </button>
                   )}
                 </div>
               ))}
+              {storyForms.length < 6 && (
+                <div className="form-tab" onClick={handleAddForm}>
+                    Add
+                </div>
+              )}
             </div>
             <form>
               {storyForms.map((form, index) => (
@@ -130,20 +152,38 @@ const EditStoryModal = ({ isOpen, onClose, story }) => {
               ))}
               <div className="form-group">
                 <label>Category:</label>
-                <input
-                  type="text"
-                  name="category"
-                  value={category}
-                  onChange={handleCategoryChange}
-                />
-              </div>
-              <button type="button" className="add-form-button" onClick={handleAddForm}>
-                Add Form
-              </button>
+                <select
+                    name="category"
+                    value={category}
+                    onChange={handleCategoryChange}
+                >
+                    <option value="">Select category</option>
+                    <option value="Food">Food</option>
+                    <option value="Health and Fitness">Health and Fitness</option>
+                    <option value="Travel">Travel</option>
+                    <option value="Movies">Movies</option>
+                    <option value="Education">Education</option>
+                </select>
+            </div>
+            </form>
+
+            <div className="button-group">
+                {currentForm > 0 && (
+                    <button className="previous" onClick={handlePrevious}>
+                    Previous
+                    </button>
+                )}
+                {currentForm < storyForms.length - 1 && (
+                    <button className="next" onClick={handleNext}>
+                    Next
+                    </button>
+                )}
+            </div>
+
               <button type="button" className="post-button" onClick={handlePost}>
                 Post
               </button>
-            </form>
+
           </div>
         </div>
       )}
