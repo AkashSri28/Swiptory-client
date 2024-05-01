@@ -243,6 +243,7 @@ const Home = () => {
         isOpen={showViewStoryModal}
         onClose={handleCloseViewStoryModal}
         story={selectedStory}
+        handleLoginClick={handleLoginClick}
       />
 
 

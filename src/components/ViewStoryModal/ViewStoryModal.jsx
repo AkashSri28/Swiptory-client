@@ -7,6 +7,9 @@ import { IoMdClose } from "react-icons/io";
 import axios from 'axios';
 import { useAuth } from '../../context/authContext';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
     const [currentForm, setCurrentForm] = useState(0);
@@ -115,6 +118,32 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
         }
     };
 
+    const generatePublicLink = (storyId) => {
+        const publicLink = `https://swiptory-client-tau.vercel.app/story/${storyId}`; // Example URL, replace with your actual URL logic
+        return publicLink;
+    };
+
+    const handleSendButtonClick = (storyId) => {
+        const publicLink = generatePublicLink(storyId);
+        navigator.clipboard.writeText(publicLink)
+            .then(() => {
+                toast("URL copied!", {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+                console.log('uRL copied')
+            })
+            .catch(error => {
+                console.error('Error copying public link to clipboard:', error);
+            });
+    };
+
   return (
     <>
         {isOpen && (<div className="modal">
@@ -130,7 +159,8 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
 
                 <div className="close-send-buttons">
                     <span className="close-button" onClick={onClose}><IoMdClose /></span>
-                    <span className="send-button"><FiSend /></span>
+                    <span className="send-button" onClick={()=>handleSendButtonClick(story._id)}><FiSend /></span>
+                   
                 </div>
 
 
@@ -159,6 +189,7 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
                 <button onClick={handlePrevious}>Previous</button>
                 <button onClick={handleNext}>Next</button>
             </div>
+            <ToastContainer position="top-center" autoClose={2000} hideProgressBar={true} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
         </div>
     )}
     </>
