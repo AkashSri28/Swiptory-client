@@ -1,9 +1,16 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import ViewStoryModal from '../../components/ViewStoryModal/ViewStoryModal';
 
 function PublicStory() {
 
     const { storyId } = useParams(); // Get the storyId parameter from the URL
     const [story, setStory] = useState(null); // State to store the fetched story data
+
+    const [showViewStoryModal, setShowViewStoryModal] = useState(false);
+    const [showLoginModal, setShowLoginModal] = useState(false);
+
 
     useEffect(() => {
         const fetchStory = async () => {
@@ -19,54 +26,27 @@ function PublicStory() {
         fetchStory(); // Call fetchStory when the component mounts or storyId changes
     }, [storyId]);
 
+    const handleCloseViewStoryModal = () => {
+        setShowViewStoryModal(false);
+        setStory(null);
+      };
+
+      const handleLoginClick = () => {
+        setShowLoginModal(true);
+    };
+  
+
+    
+
 
 
   return (
-    <div className="modal">
-            <div className="view-story-modal">
-                <div className="progress-bar-container" style={{ display: 'flex' }}>
-                    {story && story.forms && story.forms.length > 0 && (
-                        story.forms.map((form, index) => (
-                            <div key={index} className="progress-bar" style={{ width: `${storyProgress[index]}%`, flex: '1', marginRight: '5px' }}></div>
-                        ))
-                    )}
-
-                </div>
-
-                <div className="close-send-buttons">
-                    <span className="close-button" onClick={onClose}><IoMdClose /></span>
-                    <span className="send-button" onClick={()=>handleSendButtonClick(story._id)}><FiSend /></span>
-                   
-                </div>
-
-
-                {story && story.forms && story.forms.length > 0 && (
-                    <div>
-                        <img src={story.forms[currentForm].image} alt={story.forms[currentForm].heading} />
-                        <h3>{story.forms[currentForm].heading}</h3>
-                        <p>{story.forms[currentForm].description}</p>
-                        
-                    </div>
-                )}
-
-                <div className="interactions">
-                    <button className='bookmark-btn' onClick={()=>handleBookmark(story)}>
-                        <FiBookmark className={isBookmarked ? 'bookmarked' : ''} />
-                    </button>
-                    <button className='like-btn' onClick={()=>handleLike(story)}>
-                        <FiHeart className={isLiked ? 'liked' : ''} />
-                        <span> {story.likes}</span>
-                    </button>
-                </div>
-
-               
-            </div>
-            <div className="navigation">
-                <button onClick={handlePrevious}>Previous</button>
-                <button onClick={handleNext}>Next</button>
-            </div>
-            <ToastContainer position="top-center" autoClose={2000} hideProgressBar={true} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
-        </div>
+    <ViewStoryModal
+        isOpen={showViewStoryModal}
+        onClose={handleCloseViewStoryModal}
+        story={story}
+        handleLoginClick={handleLoginClick}
+      />
   )
 }
 

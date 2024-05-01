@@ -119,7 +119,7 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
     };
 
     const generatePublicLink = (storyId) => {
-        const publicLink = `https://swiptory-client-tau.vercel.app/story/${storyId}`; // Example URL, replace with your actual URL logic
+        const publicLink = `https://localhost:3000/story/${storyId}`; // Example URL, replace with your actual URL logic
         return publicLink;
     };
 
