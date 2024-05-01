@@ -10,6 +10,7 @@ function PublicStory() {
             try {
                 const response = await axios.get(`https://swiptory-client-tau.vercel.app/api/stories/${storyId}`); // Fetch story data from backend
                 setStory(response.data); // Update state with fetched story data
+                console.log(response.data)
             } catch (error) {
                 console.error('Error fetching story:', error);
             }
