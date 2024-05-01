@@ -12,7 +12,7 @@ function PublicStory() {
                 setStory(response.data); // Update state with fetched story data
                 console.log(response.data)
             } catch (error) {
-                console.error('Error fetching story:', error);
+                console.error('Error fetchin story:', error);
             }
         };
 
