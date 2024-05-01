@@ -142,16 +142,17 @@
   /* Story card styles */
   .story-cards {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
     padding: 20px;
+    overflow-x: auto;
   }
   
   .story-card {
     width: 200px;
     height: 200px;
     background-color: #f0f0f0;
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;

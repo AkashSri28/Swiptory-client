@@ -8,14 +8,14 @@ import axios from 'axios';
 import { useAuth } from '../../context/authContext';
 
 
-const ViewStoryModal = ({ isOpen, onClose, story }) => {
+const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
     const [currentForm, setCurrentForm] = useState(0);
     const [progress, setProgress] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
     const [isBookmarked, setIsBookmarked] = useState(false);
     const [storyProgress, setStoryProgress] = useState([]);
 
-    const {token} = useAuth();
+    const {token, isLoggedIn} = useAuth();
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -63,26 +63,31 @@ const ViewStoryModal = ({ isOpen, onClose, story }) => {
     };
 
     const handleLike = async (story) => {
-        console.log("handle bookmark function")
-        const storyId = story._id;
-        try {
-            const response = await axios.post('https://swiptory-server-fm7r.onrender.com/api/story/like', {
-                storyId
-            },{
-                headers: {
-                  'Authorization': `Bearer ${token}`
+        console.log("handle like function")
+        if(isLoggedIn){
+            const storyId = story._id;
+            try {
+                const response = await axios.post('https://swiptory-server-fm7r.onrender.com/api/story/like', {
+                    storyId
+                },{
+                    headers: {
+                    'Authorization': `Bearer ${token}`
+                    }
                 }
-              }
-            );
-            if (response.data.success) {
-                console.log("Success", response.data.message)
+                );
+                if (response.data.success) {
+                    console.log("Success", response.data.message)
+                }
+                else{
+                    console.log("Failed", response.data.message)
+                }
+            } catch (error) {
+                console.error('Error liking story:', error);
+                // Handle error (e.g., display an error message to the user)
             }
-            else{
-                console.log("Failed", response.data.message)
-            }
-        } catch (error) {
-            console.error('Error liking story:', error);
-            // Handle error (e.g., display an error message to the user)
+        }else{
+            onClose();
+            handleLoginClick();
         }
     };
 
@@ -109,10 +114,6 @@ const ViewStoryModal = ({ isOpen, onClose, story }) => {
             console.error('Error bookmarking story:', error);
         }
     };
-
-    const handlePost = () => {
-
-    }
 
   return (
     <>
@@ -148,6 +149,7 @@ const ViewStoryModal = ({ isOpen, onClose, story }) => {
                     </button>
                     <button className='like-btn' onClick={()=>handleLike(story)}>
                         <FiHeart className={isLiked ? 'liked' : ''} />
+                        <span> {story.likes}</span>
                     </button>
                 </div>
 

@@ -9,6 +9,7 @@ import AddStoryModal from '../../components/AddModalStory/AddStoryModal';
 import { FaRegEdit } from "react-icons/fa";
 import EditStoryModal from '../../components/EditStoryModal/EditStoryModal';
 import ViewStoryModal from '../../components/ViewStoryModal/ViewStoryModal';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
 
@@ -33,10 +34,11 @@ const Home = () => {
     const [userStories, setUserStories] = useState([]);
 
     const [selectedStory, setSelectedStory] = useState(null);
+
+    const navigate = useNavigate();
   
     useEffect(() => {
       fetchAllStories();
-      console.log(categoryStories)
     },[]);
 
     const fetchAllStories = async () => {
@@ -204,6 +206,10 @@ const Home = () => {
       setSelectedStory(null);
     };
 
+    const redirectToBookmarks = () => {
+        navigate('/bookmarks');
+    };
+
 
   return (
     <div className="home">
@@ -214,9 +220,9 @@ const Home = () => {
         </div>
         {isLoggedIn?(
           <div className="user-profile">
-            <button className="profile-button">Bookmarks</button>
+            <button className="profile-button" onClick={redirectToBookmarks}>Bookmarks</button>
             <button className="profile-button" onClick={handleAddStoryClick}>Add Story</button>
-            <img src="profile-picture.jpg" alt="Profile" className="profile-picture" />
+            <img src={user.profilePic} alt="Profile" className="profile-picture" />
             <Menu isOpen={false} width={ '300px' } right>
               <p className="username">{user.username}</p>
               <button className="menu-button" onClick={handleLogout}>Logout</button>
@@ -292,36 +298,42 @@ const Home = () => {
       <section id="stories" className="story-cards">
         <div 
             className="story-card"
+            style={{ backgroundImage: `url('all.jpeg')` }} 
             onClick={() => handleCategoryClick('All')}
         >
             All
         </div>
         <div 
             className="story-card"
+            style={{ backgroundImage: `url('food.jpeg')` }} 
             onClick={() => handleCategoryClick('Food')}
         >
             Food
         </div>
         <div 
             className="story-card"
+            style={{ backgroundImage: `url('health.webp')` }} 
             onClick={() => handleCategoryClick('Health and Fitness')}
         >
             Health and Fitness
         </div>
         <div 
             className="story-card"
+            style={{ backgroundImage: `url('travel.jpeg')` }} 
             onClick={() => handleCategoryClick('Travel')}
         >
             Travel
         </div>
         <div 
             className="story-card"
+            style={{ backgroundImage: `url('movie.jpeg')` }} 
             onClick={() => handleCategoryClick('Movies')}
         >
             Movies
         </div>
         <div 
             className="story-card"
+            style={{ backgroundImage: `url('education.jpeg')` }} 
             onClick={() => handleCategoryClick('Education')}
         >
             Education
@@ -371,7 +383,6 @@ const Home = () => {
                         <h3>{story.forms[0].heading}</h3>
                         <p>{story.forms[0].description}</p>
                         <img src={story.forms[0].image} alt={story.forms[0].heading} />
-                        <p>Category: {story.forms[0].category}</p>
 
                       </div>
                       {isLoggedIn && story.user === user._id && (
@@ -399,7 +410,7 @@ const Home = () => {
                         <h3>{story.forms[0].heading}</h3>
                         <p>{story.forms[0].description}</p>
                         <img src={story.forms[0].image} alt={story.forms[0].heading} />
-                        <p>Category: {story.forms[0].category}</p>
+  
                       </div>
                       {isLoggedIn && story.user === user._id && (
                           <button className="edit-button"><FaRegEdit /> Edit</button>
@@ -426,7 +437,7 @@ const Home = () => {
                         <h3>{story.forms[0].heading}</h3>
                         <p>{story.forms[0].description}</p>
                         <img src={story.forms[0].image} alt={story.forms[0].heading} />
-                        <p>Category: {story.forms[0].category}</p>
+                        
                       </div>
                       {isLoggedIn && story.user === user._id && (
                           <button className="edit-button"><FaRegEdit /> Edit</button>
@@ -453,7 +464,7 @@ const Home = () => {
                         <h3>{story.forms[0].heading}</h3>
                         <p>{story.forms[0].description}</p>
                         <img src={story.forms[0].image} alt={story.forms[0].heading} />
-                        <p>Category: {story.forms[0].category}</p>
+                       
                       </div>
                       {isLoggedIn && story.user === user._id && (
                           <button className="edit-button"><FaRegEdit /> Edit</button>
@@ -481,7 +492,7 @@ const Home = () => {
                         <h3>{story.forms[0].heading}</h3>
                         <p>{story.forms[0].description}</p>
                         <img src={story.forms[0].image} alt={story.forms[0].heading} />
-                        <p>Category: {story.forms[0].category}</p>
+                      
                       </div>
                       {isLoggedIn && story.user === user._id && (
                           <button className="edit-button"><FaRegEdit /> Edit</button>
