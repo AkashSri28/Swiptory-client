@@ -8,7 +8,7 @@ function PublicStory() {
     const { storyId } = useParams(); // Get the storyId parameter from the URL
     const [story, setStory] = useState(null); // State to store the fetched story data
 
-    const [showViewStoryModal, setShowViewStoryModal] = useState(false);
+    const [showViewStoryModal, setShowViewStoryModal] = useState(true);
     const [showLoginModal, setShowLoginModal] = useState(false);
 
 
