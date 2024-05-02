@@ -5,7 +5,7 @@ import ViewStoryModal from '../../components/ViewStoryModal/ViewStoryModal';
 
 function PublicStory() {
 
-    const { storyId } = useParams(); // Get the storyId parameter from the URL
+    const { id } = useParams(); // Get the storyId parameter from the URL
     const [story, setStory] = useState(null); // State to store the fetched story data
 
     const [showViewStoryModal, setShowViewStoryModal] = useState(true);
@@ -15,17 +15,17 @@ function PublicStory() {
     useEffect(() => {
         const fetchStory = async () => {
             try {
-                const response = await axios.get(`https://swiptory-client-tau.vercel.app/api/stories/${storyId}`); // Fetch story data from backend
+                const response = await axios.get(`https://swiptory-client-tau.vercel.app/api/story/${id}`); // Fetch story data from backend
                 setStory(response.data); // Update state with fetched story data
                 console.log(response.data)
             } catch (error) {
                 console.error('Error fetchin story:', error);
             }
         };
-        console.log('public story page log')
+        console.log(id)
 
         fetchStory(); // Call fetchStory when the component mounts or storyId changes
-    }, [storyId]);
+    }, [id]);
 
     const handleCloseViewStoryModal = () => {
         setShowViewStoryModal(false);
