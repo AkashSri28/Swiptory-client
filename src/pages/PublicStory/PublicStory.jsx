@@ -22,6 +22,7 @@ function PublicStory() {
                 console.error('Error fetchin story:', error);
             }
         };
+        console.log('public story page log')
 
         fetchStory(); // Call fetchStory when the component mounts or storyId changes
     }, [storyId]);
@@ -41,12 +42,16 @@ function PublicStory() {
 
 
   return (
-    <ViewStoryModal
+    <>
+        <h1>Public story page</h1>
+     <ViewStoryModal
         isOpen={showViewStoryModal}
         onClose={handleCloseViewStoryModal}
         story={story}
         handleLoginClick={handleLoginClick}
       />
+    </>
+   
   )
 }
 

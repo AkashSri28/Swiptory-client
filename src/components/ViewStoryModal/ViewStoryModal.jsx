@@ -179,7 +179,7 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
                     </button>
                     <button className='like-btn' onClick={()=>handleLike(story)}>
                         <FiHeart className={isLiked ? 'liked' : ''} />
-                        <span> {story.likes}</span>
+                        {/* <span> {story.likes}</span> */}
                     </button>
                 </div>
 
