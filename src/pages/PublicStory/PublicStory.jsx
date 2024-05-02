@@ -15,7 +15,7 @@ function PublicStory() {
     useEffect(() => {
         const fetchStory = async () => {
             try {
-                const response = await axios.get(`https://swiptory-client-tau.vercel.app/api/story/${id}`); // Fetch story data from backend
+                const response = await axios.get(`https://swiptory-server-fm7r.onrender.com/api/story/${id}`); // Fetch story data from backend
                 setStory(response.data); // Update state with fetched story data
                 console.log(response.data)
             } catch (error) {
