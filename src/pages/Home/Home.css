@@ -23,19 +23,20 @@
   
   .auth-buttons button {
     margin-left: 20px;
-    padding: 10px 20px;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
   }
 
   .register-button {
     background-color: #FF7373; /* Pink */
+    padding: 10px;
   }
   
   .login-button {
     background-color: #73ABFF; /* Blue */
+    padding: 10px 20px;
   }
 
   .user-profile {
@@ -250,4 +251,10 @@
     border-radius: 5px;
     font-size: 1.2rem;
   }
+
+  .no-stories {
+    color: #8E8E8E;
+    padding: 50px 0; /* Adjust the padding as needed */
+}
+
   

@@ -61,7 +61,6 @@ const AddStoryModal = ({ isOpen, onClose }) => {
         }
     
         try {
-          console.log(storyForms)
           await axios.post('https://swiptory-server-fm7r.onrender.com/api/story/add', {
             storyForms,
             category
@@ -70,6 +69,14 @@ const AddStoryModal = ({ isOpen, onClose }) => {
               'Authorization': `Bearer ${token}`
             }
           });
+           // Clear form data after successful post
+           setStoryForms([
+            { heading: '', description: '', image: '' },
+            { heading: '', description: '', image: '' },
+            { heading: '', description: '', image: '' }
+          ]);
+          setCategory('');
+          setCurrentForm(0);
           onClose();
         } catch (error) {
           console.error('Error posting story:', error);

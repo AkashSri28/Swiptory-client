@@ -181,7 +181,10 @@ const Home = () => {
     };
 
     const handleAddStoryCloseModal = () => {
+      fetchAllStories();
+      fetchUserStories();
       setShowAddStoryModal(false);
+      setSelectedStory(null);
     };
 
     const handleStoryClick = (story) => {
@@ -197,6 +200,8 @@ const Home = () => {
     };
 
     const handleEditStoryCloseModal = () => {
+      fetchAllStories();
+      fetchUserStories();
       setShowEditStoryModal(false);
       setSelectedStory(null);
     };
@@ -231,7 +236,7 @@ const Home = () => {
         ):(
           <div className="auth-buttons">
             <button className="register-button" onClick={handleRegisterClick}>Register Now</button>
-            <button className="login-button" onClick={handleLoginClick}>Login</button>
+            <button className="login-button" onClick={handleLoginClick}>Sign In</button>
           </div>
         )}
       </header>
@@ -345,7 +350,8 @@ const Home = () => {
       {isLoggedIn && (
           <section id="user-stories" className="user-stories">
               <h2>Your Stories</h2>
-              <div className="stories-list">
+              {userStories.length > 0?(
+                <div className="stories-list">
                   {userStories.map((story, index) => (
                       <div key={index} className="story" onClick={() => handleStoryClick(story)}>
                         
@@ -362,7 +368,11 @@ const Home = () => {
                           
                       </div>
                   ))}
-              </div>
+                </div> 
+                ):(
+                    <h3 className='no-stories'>No stories available</h3>
+                  )
+                }
           </section>
       )}
 
@@ -393,7 +403,7 @@ const Home = () => {
                   ))}
               </div>
               ) : (
-                <h3>No stories available</h3>
+                <h3 className='no-stories'>No stories available</h3>
               )}
             </div>
         )}
@@ -420,7 +430,7 @@ const Home = () => {
                   ))}
               </div>
               ) : (
-                <h3>No stories available</h3>
+                <h3 className='no-stories'>No stories available</h3>
               )}
             </div>
         )}
@@ -447,7 +457,7 @@ const Home = () => {
                   ))}
               </div>
               ) : (
-                <h3>No stories available</h3>
+                <h3 className='no-stories'>No stories available</h3>
               )}
             </div>
         )}
@@ -474,7 +484,7 @@ const Home = () => {
                   ))}
               </div>
               ) : (
-                <h3>No stories available</h3>
+                <h3 className='no-stories'>No stories available</h3>
               )}
             </div>
         )}
@@ -502,7 +512,7 @@ const Home = () => {
                   ))}
               </div>
               ) : (
-                <h3>No stories available</h3>
+                <h3 className='no-stories'>No stories available</h3>
               )}
             </div>
         )}
