@@ -94,10 +94,13 @@ const EditStoryModal = ({ isOpen, onClose, story }) => {
       {isOpen && (
         <div className="modal">
           <div className="modal-content">
-            <span className="close" onClick={onClose}>
+            <div className="close" onClick={onClose}>
               &times;
-            </span>
-            <div className="story-form">
+            </div>
+            <div className="add-slides-text">
+                Add up to 6 slides
+            </div>
+            <div className="form-tabs">
               {storyForms.map((form, index) => (
                 <div
                   key={index}

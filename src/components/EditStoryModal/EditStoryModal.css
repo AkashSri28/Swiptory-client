@@ -1,7 +1,16 @@
 /* EditStoryModal.css */
+.add-slides-text{
+    font-size: 0.6em;
+    margin-right: 40px;
+    margin-top: 40px;
+    text-align: right;
+}
+
 
   .form-tabs {
     display: flex;
+    justify-content: flex-start; 
+    margin: 20px;
   }
   
   .form-tab {
@@ -12,9 +21,6 @@
     border-radius: 5px;
   }
   
-  .form-tab.active {
-    background-color: #ccc;
-  }
   
   .form {
     display: none;

@@ -11,6 +11,7 @@ import EditStoryModal from '../../components/EditStoryModal/EditStoryModal';
 import ViewStoryModal from '../../components/ViewStoryModal/ViewStoryModal';
 import { useNavigate } from 'react-router-dom';
 import { GoEye, GoEyeClosed } from "react-icons/go";
+import { FaBookmark } from "react-icons/fa";
 
 const Home = () => {
 
@@ -262,7 +263,10 @@ const Home = () => {
         </div>
         {isLoggedIn?(
           <div className="user-profile">
-            <button className="profile-button" onClick={redirectToBookmarks}>Bookmarks</button>
+            <button className="profile-button" onClick={redirectToBookmarks}>
+              <FaBookmark size={15} style={{ marginRight: '5px' }}  />
+              Bookmarks
+            </button>
             <button className="profile-button" onClick={handleAddStoryClick}>Add Story</button>
             <img src={user.profilePic} alt="Profile" className="profile-picture" />
             <Menu isOpen={false} width={ '300px' } right>
