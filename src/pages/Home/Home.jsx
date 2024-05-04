@@ -35,6 +35,13 @@ const Home = () => {
 
     const [selectedStory, setSelectedStory] = useState(null);
 
+    const [showAllUserStories, setShowAllUserStories] = useState(false); 
+    const [showAllFoodStories, setShowAllFoodStories] = useState(false); 
+    const [showAllHealthStories, setShowAllHealthStories] = useState(false); 
+    const [showAllTravelStories, setShowAllTravelStories] = useState(false); 
+    const [showAllMoviesStories, setShowAllMoviesStories] = useState(false); 
+    const [showAllEducationStories, setShowAllEducationStories] = useState(false); 
+
     const navigate = useNavigate();
   
     useEffect(() => {
@@ -215,6 +222,36 @@ const Home = () => {
         navigate('/bookmarks');
     };
 
+    const handleShowMoreClick = (sectionId) => {
+        switch (sectionId) {
+          case 'userStories':
+              setShowAllUserStories(true);
+              break;
+          case 'foodStories':
+              setShowAllFoodStories(true);
+              break;
+          case 'healthStories':
+              setShowAllHealthStories(true);
+              break;
+          case 'travelStories':
+              setShowAllTravelStories(true);
+              break;
+          case 'moviesStories':
+              setShowAllMoviesStories(true);
+              break;
+          case 'educationStories':
+              setShowAllEducationStories(true);
+              break;
+          default:
+              break;
+      }
+    };
+
+    const handleShowLessClick = () => {
+      setShowAllFoodStories(false);
+      console.log("show less");
+    }
+
 
   return (
     <div className="home">
@@ -352,7 +389,8 @@ const Home = () => {
               <h2>Your Stories</h2>
               {userStories.length > 0?(
                 <div className="stories-list">
-                  {userStories.map((story, index) => (
+                  {showAllUserStories?
+                    (userStories.map((story, index) => (
                       <div key={index} className="story" onClick={() => handleStoryClick(story)}>
                         
                         <div className="story-content">
@@ -360,14 +398,34 @@ const Home = () => {
                           <h3>{story.forms[0].heading}</h3>
                           <p>{story.forms[0].description}</p>
                          
-                          {/* <p>Category: {story.forms[0].category}</p> */}
                         </div>
                         {isLoggedIn && story.user === user._id && (
                           <button className="edit-button" onClick={(e) => { e.stopPropagation(); handleEditStory(story); }}><FaRegEdit /> Edit</button>
                         )}
-                          
                       </div>
-                  ))}
+                  ))):(
+                    userStories
+                    .slice(0,4)
+                    .map((story, index) => (
+                      <div key={index} className="story" onClick={() => handleStoryClick(story)}>
+                        
+                        <div className="story-content">
+                          <img src={story.forms[0].image} alt={story.forms[0].heading} />
+                          <h3>{story.forms[0].heading}</h3>
+                          <p>{story.forms[0].description}</p>
+                         
+                        </div>
+                        {isLoggedIn && story.user === user._id && (
+                          <button className="edit-button" onClick={(e) => { e.stopPropagation(); handleEditStory(story); }}><FaRegEdit /> Edit</button>
+                        )}
+                      </div>
+                  ))
+
+                )}
+                {!showAllUserStories && ( // Show "Show More" button if all stories are not shown
+                    <button className="show-more-button" onClick={()=>handleShowMoreClick('userStories')}>Show More</button>
+                )}
+
                 </div> 
                 ):(
                     <h3 className='no-stories'>No stories available</h3>
@@ -385,7 +443,8 @@ const Home = () => {
               <h2>Food</h2>
               {categoryStories.filter((story) => story.category === 'Food').length > 0 ? (
               <div className="stories-list">
-                {categoryStories
+                {showAllFoodStories?
+                  (categoryStories
                   .filter((story) => story.category === 'Food')
                   .map((story, index) => (
                     <div key={index} className="story" onClick={() => handleStoryClick(story)}>
@@ -393,15 +452,39 @@ const Home = () => {
                       <div className="story-content">
                         <img src={story.forms[0].image} alt={story.forms[0].heading} />
                         <h3>{story.forms[0].heading}</h3>
-                        <p>{story.forms[0].description}</p>
-                        
+                        <p>{story.forms[0].description}</p>        
 
                       </div>
                       {isLoggedIn && story.user === user._id && (
                           <button className="edit-button"><FaRegEdit /> Edit</button>
                         )}
                     </div>
-                  ))}
+                  ))):(
+                    categoryStories
+                      .filter((story) => story.category === 'Food')
+                      .slice(0, 4)
+                      .map((story, index) => (
+                        <div key={index} className="story" onClick={() => handleStoryClick(story)}>
+                          
+                          <div className="story-content">
+                            <img src={story.forms[0].image} alt={story.forms[0].heading} />
+                            <h3>{story.forms[0].heading}</h3>
+                            <p>{story.forms[0].description}</p>
+
+                          </div>
+                          {isLoggedIn && story.user === user._id && (
+                              <button className="edit-button"><FaRegEdit /> Edit</button>
+                            )}
+                        </div>
+                      ))
+                  )
+                }
+
+                  {
+                    !showAllFoodStories
+                       && ( // Show "Show More" button if all stories are not shown
+                      <button className="show-more-button" onClick={()=>handleShowMoreClick('foodStories')}>Show More</button>
+                  )}
               </div>
               ) : (
                 <h3 className='no-stories'>No stories available</h3>
@@ -411,7 +494,8 @@ const Home = () => {
         {(selectedCategory === 'All' || selectedCategory === 'Health and Fitness') && (
             <div className="category">
             <h2>Health and Fitness</h2>
-            {categoryStories.filter((story) => story.category === 'Health and Fitness').length > 0 ? (
+            {
+            categoryStories.filter((story) => story.category === 'Health and Fitness').length > 0 ? (
               <div className="stories-list">
                 {categoryStories
                   .filter((story) => story.category === 'Health and Fitness')
