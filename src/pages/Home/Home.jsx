@@ -10,6 +10,7 @@ import { FaRegEdit } from "react-icons/fa";
 import EditStoryModal from '../../components/EditStoryModal/EditStoryModal';
 import ViewStoryModal from '../../components/ViewStoryModal/ViewStoryModal';
 import { useNavigate } from 'react-router-dom';
+import { GoEye, GoEyeClosed } from "react-icons/go";
 
 const Home = () => {
 
@@ -41,6 +42,8 @@ const Home = () => {
     const [showAllTravelStories, setShowAllTravelStories] = useState(false); 
     const [showAllMoviesStories, setShowAllMoviesStories] = useState(false); 
     const [showAllEducationStories, setShowAllEducationStories] = useState(false); 
+
+    const [showPassword, setShowPassword] = useState(false)
 
     const navigate = useNavigate();
   
@@ -128,15 +131,12 @@ const Home = () => {
               // Login successful
               const data = response.data;
               console.log('Login successful');
-              console.log('Token:', data.token); // Store this token in local storage
-              console.log('User:', data.user);
+              login(data.user, data.token);
               // Reset the form fields
               setUsername('');
               setPassword('');
               // Close the modal
               handleLoginCloseModal();
-              localStorage.setItem('token', data.token);
-              localStorage.setItem('user', JSON.stringify(data.user));
             } else {
               // Login failed
               console.error('Login failed');
@@ -298,15 +298,20 @@ const Home = () => {
             <h2>Register to SwipTory</h2>
             <form onSubmit={handleRegistrationSubmit}>
                 <div className="form-group">
-                <label htmlFor="username">Username:</label>
-                <input type="text" id="username" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                <label htmlFor="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter username" value={username} onChange={(e) => setUsername(e.target.value)} />
                 </div>
                 <div className="form-group">
-                <label htmlFor="password">Password:</label>
-                <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <label htmlFor="password">Password</label>
+                <div className="password-input">
+                  <input type={showPassword ? "text" : "password"} id="password" name="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                  <span className="password-toggle" onClick={() => setShowPassword(!showPassword)}>{showPassword ? <GoEye /> : <GoEyeClosed />}</span>
+                </div>
+
                 </div>
                 {registrationError && <p className="error-message">{registrationError}</p>}
-                <button type="submit">Register</button>
+
+                <button className='register-submit' type="submit">Register</button>
                 
             </form>
           </div>
@@ -321,16 +326,21 @@ const Home = () => {
             <h2>Login to SwipTory</h2>
             <form onSubmit={handleLoginSubmit}>
                 <div className="form-group">
-                <label htmlFor="username">Username:</label>
-                <input type="text" id="username" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                <label htmlFor="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter username" value={username} onChange={(e) => setUsername(e.target.value)} />
                 </div>
                 <div className="form-group">
-                <label htmlFor="password">Password:</label>
-                <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <label htmlFor="password">Password</label>
+
+                <div className="password-input">
+                  <input type={showPassword ? "text" : "password"} id="password" name="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                  <span className="password-toggle" onClick={() => setShowPassword(!showPassword)}>{showPassword ? <GoEye /> : <GoEyeClosed />}</span>
+                </div>
+               
                 </div>
                 {loginError && <p className="error-message">{loginError}</p>}
                 
-                <button type="submit">Login</button>
+                <button className='register-submit' type="submit">Login</button>
                 
             </form>
           </div>
@@ -422,15 +432,18 @@ const Home = () => {
                   ))
 
                 )}
-                {!showAllUserStories && ( // Show "Show More" button if all stories are not shown
-                    <button className="show-more-button" onClick={()=>handleShowMoreClick('userStories')}>Show More</button>
-                )}
 
                 </div> 
                 ):(
                     <h3 className='no-stories'>No stories available</h3>
                   )
                 }
+
+                {(userStories.length > 4 && !showAllUserStories) && ( // Show "Show More" button if all stories are not shown
+                    <button className="show-more-button" onClick={()=>handleShowMoreClick('userStories')}>Show More</button>
+                )}
+
+                
           </section>
       )}
 
@@ -479,15 +492,14 @@ const Home = () => {
                       ))
                   )
                 }
-
-                  {
-                    !showAllFoodStories
-                       && ( // Show "Show More" button if all stories are not shown
-                      <button className="show-more-button" onClick={()=>handleShowMoreClick('foodStories')}>Show More</button>
-                  )}
               </div>
               ) : (
                 <h3 className='no-stories'>No stories available</h3>
+              )}
+              {
+                (categoryStories.filter((story) => story.category === 'Food').length > 4 && !showAllFoodStories)
+                    && ( // Show "Show More" button if all stories are not shown
+                  <button className="show-more-button" onClick={()=>handleShowMoreClick('foodStories')}>Show More</button>
               )}
             </div>
         )}
@@ -497,7 +509,8 @@ const Home = () => {
             {
             categoryStories.filter((story) => story.category === 'Health and Fitness').length > 0 ? (
               <div className="stories-list">
-                {categoryStories
+                {showAllHealthStories? 
+                  (categoryStories
                   .filter((story) => story.category === 'Health and Fitness')
                   .map((story, index) => (
                     <div key={index} className="story" onClick={() => handleStoryClick(story)}>
@@ -513,10 +526,37 @@ const Home = () => {
                           <button className="edit-button"><FaRegEdit /> Edit</button>
                         )}
                     </div>
-                  ))}
+                  ))
+                ):(
+                  categoryStories
+                  .filter((story) => story.category === 'Health and Fitness')
+                  .slice(0,4)
+                  .map((story, index) => (
+                    <div key={index} className="story" onClick={() => handleStoryClick(story)}>
+                      
+                      <div className="story-content">
+                        <img src={story.forms[0].image} alt={story.forms[0].heading} />
+                        <h3>{story.forms[0].heading}</h3>
+                        <p>{story.forms[0].description}</p>
+                        
+  
+                      </div>
+                      {isLoggedIn && story.user === user._id && (
+                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        )}
+                    </div>
+                  ))
+                )}
+
+               
               </div>
               ) : (
                 <h3 className='no-stories'>No stories available</h3>
+              )}
+              {
+              (categoryStories.filter((story) => story.category === 'Health and Fitness').length > 4 && !showAllHealthStories)
+                && ( // Show "Show More" button if all stories are not shown
+                <button className="show-more-button" onClick={()=>handleShowMoreClick('healthStories')}>Show More</button>
               )}
             </div>
         )}
@@ -525,7 +565,8 @@ const Home = () => {
             <h2>Travel</h2>
             {categoryStories.filter((story) => story.category === 'Travel').length > 0 ? (
               <div className="stories-list">
-                {categoryStories
+                {showAllTravelStories?
+                  (categoryStories
                   .filter((story) => story.category === 'Travel')
                   .map((story, index) => (
                     <div key={index} className="story" onClick={() => handleStoryClick(story)}>
@@ -541,10 +582,36 @@ const Home = () => {
                           <button className="edit-button"><FaRegEdit /> Edit</button>
                         )}
                     </div>
-                  ))}
+                  ))
+                ):(
+                  categoryStories
+                  .filter((story) => story.category === 'Travel')
+                  .slice(0,4)
+                  .map((story, index) => (
+                    <div key={index} className="story" onClick={() => handleStoryClick(story)}>
+                      
+                      <div className="story-content">
+                        <img src={story.forms[0].image} alt={story.forms[0].heading} />
+                        <h3>{story.forms[0].heading}</h3>
+                        <p>{story.forms[0].description}</p>
+                        
+                        
+                      </div>
+                      {isLoggedIn && story.user === user._id && (
+                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        )}
+                    </div>
+                  ))
+                )}
+                 
               </div>
               ) : (
                 <h3 className='no-stories'>No stories available</h3>
+              )}
+              {
+                (categoryStories.filter((story) => story.category === 'Travel').length > 4 && !showAllTravelStories)
+                    && ( // Show "Show More" button if all stories are not shown
+                  <button className="show-more-button" onClick={()=>handleShowMoreClick('travelStories')}>Show More</button>
               )}
             </div>
         )}
@@ -553,7 +620,8 @@ const Home = () => {
             <h2>Movies</h2>
             {categoryStories.filter((story) => story.category === 'Movies').length > 0 ? (
               <div className="stories-list">
-                {categoryStories
+                {showAllMoviesStories?
+                  (categoryStories
                   .filter((story) => story.category === 'Movies')
                   .map((story, index) => (
                     <div key={index} className="story" onClick={() => handleStoryClick(story)}>
@@ -569,10 +637,36 @@ const Home = () => {
                           <button className="edit-button"><FaRegEdit /> Edit</button>
                         )}
                     </div>
-                  ))}
+                  ))
+                ):(
+                  categoryStories
+                  .filter((story) => story.category === 'Movies')
+                  .slice(0,4)
+                  .map((story, index) => (
+                    <div key={index} className="story" onClick={() => handleStoryClick(story)}>
+                      
+                      <div className="story-content">
+                        <img src={story.forms[0].image} alt={story.forms[0].heading} />
+                        <h3>{story.forms[0].heading}</h3>
+                        <p>{story.forms[0].description}</p>
+                        
+                       
+                      </div>
+                      {isLoggedIn && story.user === user._id && (
+                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        )}
+                    </div>
+                  ))
+                )}
+                 
               </div>
               ) : (
                 <h3 className='no-stories'>No stories available</h3>
+              )}
+              {
+                (categoryStories.filter((story) => story.category === 'Movies').length > 4 && !showAllMoviesStories)
+                  && ( // Show "Show More" button if all stories are not shown
+                  <button className="show-more-button" onClick={()=>handleShowMoreClick('moviesStories')}>Show More</button>
               )}
             </div>
         )}
@@ -581,7 +675,8 @@ const Home = () => {
             <h2>Education</h2>
             {categoryStories.filter((story) => story.category === 'Education').length > 0 ? (
               <div className="stories-list">
-                {categoryStories
+                {showAllEducationStories?
+                  (categoryStories
                   .filter((story) => story.category === 'Education')
                   .map((story, index) => (
                     <div key={index} className="story" onClick={() => handleStoryClick(story)}>
@@ -598,10 +693,37 @@ const Home = () => {
                           <button className="edit-button"><FaRegEdit /> Edit</button>
                         )}
                     </div>
-                  ))}
+                  ))
+                ):(
+                  categoryStories
+                  .filter((story) => story.category === 'Education')
+                  .slice(0,4)
+                  .map((story, index) => (
+                    <div key={index} className="story" onClick={() => handleStoryClick(story)}>
+                      
+                      <div className="story-content">
+                        <img src={story.forms[0].image} alt={story.forms[0].heading} />
+                      
+                        <h3>{story.forms[0].heading}</h3>
+                        <p>{story.forms[0].description}</p>
+                        
+                      
+                      </div>
+                      {isLoggedIn && story.user === user._id && (
+                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        )}
+                    </div>
+                  ))
+                )}
+                 
               </div>
               ) : (
                 <h3 className='no-stories'>No stories available</h3>
+              )}
+              {
+                (categoryStories.filter((story) => story.category === 'Education').length > 4 && !showAllEducationStories)
+                    && ( // Show "Show More" button if all stories are not shown
+                  <button className="show-more-button" onClick={()=>handleShowMoreClick('educationStories')}>Show More</button>
               )}
             </div>
         )}
