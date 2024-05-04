@@ -175,31 +175,47 @@
   padding: 10px;
   position: relative;
   width: 100%;
-  padding-top: calc(100% * 5 / 4); /* 16:9 aspect ratio */
+  height: 100%;
+  /* padding-top: calc(100% * 5 / 4);  */
+  /* 16:9 aspect ratio */
   overflow: hidden;
+  background-color: #1a1a1a;
 }
 
 .story-content h3,
 .story-content p {
-  position: absolute;
-  bottom: 40px;
-  left: 10px;
-  color: white;
-  z-index: 1;
+  /* position: absolute; */
+  /* bottom: 40px;
+  left: 10px; */
+  /* color: white;
+  z-index: 1; */
+  color: #fff;
+  text-align: left;
+  padding-left: 10px;
+
+}
+
+.story-content h3{
+  font-size: 1.2em;
+  margin: 0px;
 }
 
 .story-content p {
-  bottom: 10px;
+  font-size: 0.8em;
+  margin-bottom: 10px;
 }
 
 .story img {
-  position: absolute;
+  /* position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 10px; */
+  width: 100%;
+  height: 70%;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
 }
 
 .user-stories {
@@ -210,6 +226,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+  padding: 25px;
 }
 
 .edit-button {
@@ -222,7 +239,7 @@
   font-size: 12px;
   cursor: pointer;
   position: absolute;
-  bottom: -20px;
+  bottom: -40px;
   left: 40%;
   color: #000;
   z-index: 1;
