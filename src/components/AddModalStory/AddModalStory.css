@@ -1,3 +1,8 @@
+.story-form{
+  width: 80%;
+  margin: 0 auto;
+}
+
 .form-tab {
     display: inline-block;
     padding: 10px;
@@ -26,6 +31,18 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+.category-input-container {
+  display: flex;
+  align-items: center;
+}
+
+
+.category-note {
+  font-size: 12px;
+  color: #666;
+  margin-left: 10px;
 }
 
 .post-button {

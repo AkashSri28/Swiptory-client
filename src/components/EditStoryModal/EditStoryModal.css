@@ -10,15 +10,16 @@
   .form-tabs {
     display: flex;
     justify-content: flex-start; 
-    margin: 20px;
+    margin-bottom: 20px;
   }
   
   .form-tab {
     cursor: pointer;
     padding: 10px;
     margin-right: 10px;
-    border: 1px solid #ccc;
     border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
   }
   
   
@@ -36,6 +37,8 @@
   
   label {
     display: block;
+    text-align: left;
+
   }
   
   input[type='text'] {

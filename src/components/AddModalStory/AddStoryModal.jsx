@@ -92,29 +92,39 @@ const AddStoryModal = ({ isOpen, onClose }) => {
             <button className="close" onClick={() => onClose()}>
               &times;
             </button>
+            <div className="add-slides-text">
+                Add up to 6 slides
+            </div>
             <div className="story-form">
 
-              {storyForms.map((form, index) => (
-                <div key={index} className={`form-tab ${index === currentForm ? 'active' : ''}`} onClick={() => handleTabClick(index)}>
-                  Slide {index + 1}
-                  {index > 2 && (
-                    <button className="cancel-form-button" onClick={() => handleCancelForm(index)}>
-                      &times;
-                    </button>
-                  )}
-                </div>
-            ))}
-            {storyForms.length < 6 && (
-              <div className="form-tab" onClick={handleAddForm}>
-                Add
+              <div className="form-tabs">
+                {storyForms.map((form, index) => (
+                    <div key={index} className={`form-tab ${index === currentForm ? 'active' : ''}`} onClick={() => handleTabClick(index)}>
+                      Slide {index + 1}
+                      {index > 2 && (
+                        <button className="cancel-form-button" onClick={() => handleCancelForm(index)}>
+                          &times;
+                        </button>
+                      )}
+                    </div>
+                ))}
+
+                {storyForms.length < 6 && (
+                  <div className="form-tab" onClick={handleAddForm}>
+                    Add
+                  </div>
+                )}
               </div>
-            )}
+
+
+            
           <form>
             <div className="form-group">
               <label>Heading:</label>
               <input
                 type="text"
                 name="heading"
+                placeholder='Your heading'
                 value={storyForms[currentForm]?.heading}
                 onChange={(e) => handleInputChange(currentForm, e)}
               />
@@ -123,33 +133,39 @@ const AddStoryModal = ({ isOpen, onClose }) => {
               <label>Description:</label>
               <textarea
                 name="description"
+                placeholder='Story Description'
                 value={storyForms[currentForm]?.description}
                 onChange={(e) => handleInputChange(currentForm, e)}
               ></textarea>
             </div>
             <div className="form-group">
-              <label>Image (URL):</label>
+              <label>Image :</label>
               <input
                 type="text"
                 name="image"
+                placeholder='Add Image url'
                 value={storyForms[currentForm]?.image}
                 onChange={(e) => handleInputChange(currentForm, e)}
               />
             </div>
             <div className="form-group">
               <label>Category:</label>
-              <select
-                name="category"
-                value={category}
-                onChange={handleCategoryChange}
-              >
-                <option value="">Select category</option>
-                <option value="Food">Food</option>
-                <option value="Health and Fitness">Health and Fitness</option>
-                <option value="Travel">Travel</option>
-                <option value="Movies">Movies</option>
-                <option value="Education">Education</option>
-              </select>
+              <div className="category-input-container">
+                <select
+                  name="category"
+                  value={category}
+                  onChange={handleCategoryChange}
+                >
+                  <option value="">Select category</option>
+                  <option value="Food">Food</option>
+                  <option value="Health and Fitness">Health and Fitness</option>
+                  <option value="Travel">Travel</option>
+                  <option value="Movies">Movies</option>
+                  <option value="Education">Education</option>
+                </select>
+                <span className="category-note">This field will be common for all slides</span>
+              </div>
+              
             </div>
           </form>
         </div>

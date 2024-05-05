@@ -135,12 +135,11 @@ const EditStoryModal = ({ isOpen, onClose, story }) => {
                   </div>
                   <div className="form-group">
                     <label>Description:</label>
-                    <input
-                      type="text"
+                    <textarea
                       name="description"
                       value={form.description}
                       onChange={(e) => handleFormChange(e, index)}
-                    />
+                    ></textarea>
                   </div>
                   <div className="form-group">
                     <label>Image (URL):</label>
