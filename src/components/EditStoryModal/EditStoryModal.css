@@ -4,6 +4,7 @@
     margin-right: 40px;
     margin-top: 40px;
     text-align: right;
+    margin-bottom: 10px;
 }
 
 
@@ -15,7 +16,7 @@
   
   .form-tab {
     cursor: pointer;
-    padding: 10px;
+    padding: 15px 12px;
     margin-right: 10px;
     border-radius: 5px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
@@ -49,8 +50,7 @@
     box-sizing: border-box;
   }
   
-  .add-form-button,
-  .post-button {
+  .add-form-button {
     background-color: #007bff;
     color: white;
     border: none;

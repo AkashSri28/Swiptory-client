@@ -43,7 +43,6 @@ function PublicStory() {
 
   return (
     <>
-        <h1>Public story page</h1>
      <ViewStoryModal
         isOpen={showViewStoryModal}
         onClose={handleCloseViewStoryModal}

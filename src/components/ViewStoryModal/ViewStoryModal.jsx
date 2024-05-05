@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import './ViewStoryModal.css';
-import { FiSend, FiBookmark, FiHeart } from "react-icons/fi";
+import { FiSend } from "react-icons/fi";
+import { FaBookmark, FaHeart } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import axios from 'axios';
 import { useAuth } from '../../context/authContext';
@@ -18,7 +19,19 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
     const [isBookmarked, setIsBookmarked] = useState(false);
     const [storyProgress, setStoryProgress] = useState([]);
 
+    const [likeCount, setLikeCount] = useState(0);
+
     const {token, isLoggedIn} = useAuth();
+
+    useEffect(() => {
+        if (token) {
+            // Check if story is liked by the user
+            checkStoryLiked();
+            // Check if story is bookmarked by the user
+            checkStoryBookmarked();
+            setLikeCount(story?.likes);
+        }
+    }, [token, story]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -51,6 +64,42 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
         }
     }, [currentForm, story]);
 
+    const checkStoryLiked = async () => {
+        try {
+            const response = await axios.get(`https://swiptory-server-fm7r.onrender.com/api/story/checkLike/${story._id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            console.log('Like',response.data)
+            if (response.data.isLiked) {
+                setIsLiked(true);
+            } else {
+                setIsLiked(false);
+            }
+        } catch (error) {
+            console.error('Error checking if story is liked:', error);
+        }
+    };
+
+    const checkStoryBookmarked = async () => {
+        try {
+            const response = await axios.get(`https://swiptory-server-fm7r.onrender.com/api/user/checkBookmark/${story._id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            console.log('Bookmark',response.data.success)
+            if (response.data.isBookmarked) {
+                setIsBookmarked(true);
+            } else {
+                setIsBookmarked(false);
+            }
+        } catch (error) {
+            console.error('Error checking if story is bookmarked:', error);
+        }
+    };
+
     const handleNext = () => {
         if (story && story.forms && story.forms.length > 0) {
             setCurrentForm((prevForm) => (prevForm === story.forms.length - 1 ? 0 : prevForm + 1));
@@ -67,34 +116,39 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
 
     const handleLike = async (story) => {
         console.log("handle like function")
-        if(isLoggedIn){
-            const storyId = story._id;
-            try {
-                const response = await axios.post('https://swiptory-server-fm7r.onrender.com/api/story/like', {
-                    storyId
-                },{
-                    headers: {
-                    'Authorization': `Bearer ${token}`
-                    }
-                }
-                );
-                if (response.data.success) {
-                    console.log("Success", response.data.message)
-                }
-                else{
-                    console.log("Failed", response.data.message)
-                }
-            } catch (error) {
-                console.error('Error liking story:', error);
-                // Handle error (e.g., display an error message to the user)
-            }
-        }else{
+        if(!token){
             onClose();
             handleLoginClick();
+        }
+        const storyId = story._id;
+        try {
+            const response = await axios.post('https://swiptory-server-fm7r.onrender.com/api/story/like', {
+                storyId
+            },{
+                headers: {
+                'Authorization': `Bearer ${token}`
+                }
+            }
+            );
+            if (response.data.success) {
+                console.log("Success", response.data.message)
+                setLikeCount(response.data.likeCount);
+                checkStoryLiked();
+            }
+            else{
+                console.log("Failed", response.data.message)
+            }
+        } catch (error) {
+            console.error('Error liking story:', error);
+            // Handle error (e.g., display an error message to the user)
         }
     };
 
     const handleBookmark = async (story) => {
+        if(!token){
+            onClose();
+            handleLoginClick();
+        }
         // setIsBookmarked(!isBookmarked);
         console.log("handle bookmark function")
         const storyId = story._id;
@@ -109,6 +163,7 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
             );
             if (response.data.success) {
                 console.log("Success", response.data.message)
+                checkStoryBookmarked();
             }
             else{
                 console.log("Failed", response.data.message)
@@ -175,19 +230,19 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
 
                 <div className="interactions">
                     <button className='bookmark-btn' onClick={()=>handleBookmark(story)}>
-                        <FiBookmark className={isBookmarked ? 'bookmarked' : ''} />
+                        <FaBookmark style={{color: isBookmarked? 'blue': 'inherit'}} />
                     </button>
                     <button className='like-btn' onClick={()=>handleLike(story)}>
-                        <FiHeart className={isLiked ? 'liked' : ''} />
-                        {/* <span> {story.likes}</span> */}
+                        <FaHeart style={{color: isLiked? 'red': 'inherit'}} />
+                        <span> {likeCount}</span>
                     </button>
                 </div>
 
                
             </div>
             <div className="navigation">
-                <button onClick={handlePrevious}>Previous</button>
-                <button onClick={handleNext}>Next</button>
+                <button onClick={handlePrevious}><img src='previous.png'/></button>
+                <button onClick={handleNext}><img src='next.png' /></button>
             </div>
             <ToastContainer position="top-center" autoClose={2000} hideProgressBar={true} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
         </div>

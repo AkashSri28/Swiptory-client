@@ -148,41 +148,50 @@ const AddStoryModal = ({ isOpen, onClose }) => {
                 onChange={(e) => handleInputChange(currentForm, e)}
               />
             </div>
-            <div className="form-group">
-              <label>Category:</label>
-              <div className="category-input-container">
+            <div className="category-input-container">
+              <div className="form-group">
+                <label>Category:</label>
+
                 <select
-                  name="category"
-                  value={category}
-                  onChange={handleCategoryChange}
-                >
-                  <option value="">Select category</option>
-                  <option value="Food">Food</option>
-                  <option value="Health and Fitness">Health and Fitness</option>
-                  <option value="Travel">Travel</option>
-                  <option value="Movies">Movies</option>
-                  <option value="Education">Education</option>
-                </select>
-                <span className="category-note">This field will be common for all slides</span>
-              </div>
+                    name="category"
+                    value={category}
+                    onChange={handleCategoryChange}
+                  >
+                    <option value="">Select category</option>
+                    <option value="Food">food</option>
+                    <option value="Health and Fitness">health and fitness</option>
+                    <option value="Travel">travel</option>
+                    <option value="Movies">movies</option>
+                    <option value="Education">education</option>
+                  </select>
               
+                  
+                  
+          
+                
+              </div>
+              <span className="category-note">This field will be common for all slides</span>
             </div>
+           
           </form>
         </div>
         <div className="button-group">
-          {currentForm > 0 && (
-            <button className="previous" onClick={handlePrevious}>
-              Previous
-            </button>
-          )}
-          {currentForm < storyForms.length - 1 && (
-            <button className="next" onClick={handleNext}>
-              Next
-            </button>
-          )}
-        </div>
-        <button className="post-button" onClick={handlePost}>Post</button>
+          <div className="navigation-buttons">
+            {currentForm > 0 && (
+              <button className="previous" onClick={handlePrevious}>
+                Previous
+              </button>
+            )}
+            {currentForm < storyForms.length - 1 && (
+              <button className="next" onClick={handleNext}>
+                Next
+              </button>
+            )}
           </div>
+          <button className="post-button" onClick={handlePost}>Post</button>
+        </div>
+
+        </div>
         </div>
       )}
     </>

@@ -100,91 +100,101 @@ const EditStoryModal = ({ isOpen, onClose, story }) => {
             <div className="add-slides-text">
                 Add up to 6 slides
             </div>
-            <div className="form-tabs">
-              {storyForms.map((form, index) => (
-                <div
-                  key={index}
-                  className={`form-tab ${index === currentForm ? 'active' : ''}`}
-                  onClick={() => handleTabClick(index)}
-                >
-                  Slide {index + 1}
-                  {index > 2 && (
-                    <button className="cancel-form-button" onClick={() => handleRemoveForm(index)}>
-                      &times;
-                    </button>
-                  )}
+
+            <div className="story-form">
+                <div className="form-tabs">
+                {storyForms.map((form, index) => (
+                    <div
+                    key={index}
+                    className={`form-tab ${index === currentForm ? 'active' : ''}`}
+                    onClick={() => handleTabClick(index)}
+                    >
+                    Slide {index + 1}
+                    {index > 2 && (
+                        <button className="cancel-form-button" onClick={() => handleRemoveForm(index)}>
+                        &times;
+                        </button>
+                    )}
+                    </div>
+                ))}
+                {storyForms.length < 6 && (
+                    <div className="form-tab" onClick={handleAddForm}>
+                        Add
+                    </div>
+                )}
                 </div>
-              ))}
-              {storyForms.length < 6 && (
-                <div className="form-tab" onClick={handleAddForm}>
-                    Add
-                </div>
-              )}
+
+                <form>
+                    {storyForms.map((form, index) => (
+                        <div key={index} className={`form ${index === currentForm ? 'active' : ''}`}>
+                        <div className="form-group">
+                            <label>Heading:</label>
+                            <input
+                            type="text"
+                            name="heading"
+                            value={form.heading}
+                            onChange={(e) => handleFormChange(e, index)}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Description:</label>
+                            <textarea
+                            name="description"
+                            value={form.description}
+                            onChange={(e) => handleFormChange(e, index)}
+                            ></textarea>
+                        </div>
+                        <div className="form-group">
+                            <label>Image (URL):</label>
+                            <input
+                            type="text"
+                            name="image"
+                            value={form.image}
+                            onChange={(e) => handleFormChange(e, index)}
+                            />
+                        </div>
+                        </div>
+                    ))}
+                    <div className="form-group">
+                        <label>Category:</label>
+                        <select
+                            name="category"
+                            value={category}
+                            onChange={handleCategoryChange}
+                        >
+                            <option value="">Select category</option>
+                            <option value="Food">Food</option>
+                            <option value="Health and Fitness">Health and Fitness</option>
+                            <option value="Travel">Travel</option>
+                            <option value="Movies">Movies</option>
+                            <option value="Education">Education</option>
+                        </select>
+                    </div>
+                    </form>
+
             </div>
-            <form>
-              {storyForms.map((form, index) => (
-                <div key={index} className={`form ${index === currentForm ? 'active' : ''}`}>
-                  <div className="form-group">
-                    <label>Heading:</label>
-                    <input
-                      type="text"
-                      name="heading"
-                      value={form.heading}
-                      onChange={(e) => handleFormChange(e, index)}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Description:</label>
-                    <textarea
-                      name="description"
-                      value={form.description}
-                      onChange={(e) => handleFormChange(e, index)}
-                    ></textarea>
-                  </div>
-                  <div className="form-group">
-                    <label>Image (URL):</label>
-                    <input
-                      type="text"
-                      name="image"
-                      value={form.image}
-                      onChange={(e) => handleFormChange(e, index)}
-                    />
-                  </div>
-                </div>
-              ))}
-              <div className="form-group">
-                <label>Category:</label>
-                <select
-                    name="category"
-                    value={category}
-                    onChange={handleCategoryChange}
-                >
-                    <option value="">Select category</option>
-                    <option value="Food">Food</option>
-                    <option value="Health and Fitness">Health and Fitness</option>
-                    <option value="Travel">Travel</option>
-                    <option value="Movies">Movies</option>
-                    <option value="Education">Education</option>
-                </select>
-            </div>
-            </form>
+            
+           
 
             <div className="button-group">
-                {currentForm > 0 && (
-                    <button className="previous" onClick={handlePrevious}>
-                    Previous
-                    </button>
-                )}
-                {currentForm < storyForms.length - 1 && (
-                    <button className="next" onClick={handleNext}>
-                    Next
-                    </button>
-                )}
-            </div>
+                <div className="navigation-buttons">
+                    {currentForm > 0 && (
+                        <button className="previous" onClick={handlePrevious}>
+                        Previous
+                        </button>
+                    )}
+                    {currentForm < storyForms.length - 1 && (
+                        <button className="next" onClick={handleNext}>
+                        Next
+                        </button>
+                    )}
+                </div>
 
-              <button type="button" className="post-button" onClick={handlePost}>
-                Post
-              </button>
+                <button type="button" className="post-button" onClick={handlePost}>
+                    Post
+                </button>
+
+            </div>
 
           </div>
         </div>

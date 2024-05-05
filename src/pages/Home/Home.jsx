@@ -95,7 +95,7 @@ const Home = () => {
                 password,
             });
       
-            if (response.status === 201) {
+            if (response.status === 200) {
               // Registration successful
               const data = response.data;
               console.log('Registration successful');
@@ -107,6 +107,7 @@ const Home = () => {
               handleRegistrationCloseModal();
             } else {
               // Registration failed
+              setRegistrationError(response.data.message)
               console.error('Registration failed');
             }
         } catch (error) {
@@ -140,10 +141,11 @@ const Home = () => {
               handleLoginCloseModal();
             } else {
               // Login failed
+              setLoginError(response.data.message)
               console.error('Login failed');
             }
         } catch (error) {
-        console.error('Error logging in:', error);
+          console.error('Error logging in:', error);
         }
     };
 
