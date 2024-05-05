@@ -44,7 +44,10 @@ const Home = () => {
     const [showAllMoviesStories, setShowAllMoviesStories] = useState(false); 
     const [showAllEducationStories, setShowAllEducationStories] = useState(false); 
 
-    const [showPassword, setShowPassword] = useState(false)
+    const [showPassword, setShowPassword] = useState(false);
+
+    // State to track whether the menu is open or closed
+    const [menuOpen, setMenuOpen] = useState(false);
 
     const navigate = useNavigate();
   
@@ -255,6 +258,11 @@ const Home = () => {
       console.log("show less");
     }
 
+    const handleCloseMenuClick = () => {
+      setMenuOpen(false); // Close the menu by updating the state
+    };
+  
+
 
   return (
     <div className="home">
@@ -277,10 +285,23 @@ const Home = () => {
             </Menu>
           </div>
         ):(
-          <div className="auth-buttons">
-            <button className="register-button" onClick={handleRegisterClick}>Register Now</button>
-            <button className="login-button" onClick={handleLoginClick}>Sign In</button>
-          </div>
+          <>
+             <div className="auth-buttons">
+              <button className="register-button" onClick={handleRegisterClick}>Register Now</button>
+              <button className="login-button" onClick={handleLoginClick}>Sign In</button>
+            </div>
+            <div className="mobile-auth-buttons">
+              <Menu isOpen={menuOpen} width={'100%'} height={'50%'} right>
+                <button className="close-menu-button" onClick={handleCloseMenuClick}>X</button>
+                <button onClick={handleLoginClick}>Login</button>
+                <button onClick={handleRegisterClick}>Register</button>
+                
+
+              </Menu>
+            </div>
+          
+          </>
+
         )}
       </header>
 
