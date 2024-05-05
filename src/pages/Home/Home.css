@@ -24,6 +24,10 @@
   .mobile-auth-buttons{
     display: none;
   }
+
+  .mobile-user-profile{
+    display: none;
+  }
   
   .auth-buttons button {
     margin-left: 20px;
@@ -197,13 +201,16 @@
   /* Story card styles */
   .story-cards {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 20px;
+    overflow-x: auto; /* Enable horizontal scrolling */
     padding: 20px;
-    overflow-x: auto;
+    -ms-overflow-style: none; /* Hides scrollbar in IE and Edge */
+    scrollbar-width: none; 
   }
   
   .story-card {
+    flex: 0 0 auto;
     width: 200px;
     height: 200px;
     background-color: #f0f0f0;
@@ -213,6 +220,7 @@
     align-items: center;
     border-radius: 10px;
     font-size: 1.2rem;
+    margin-left: 20px;
   }
   
 /* User stories */
@@ -340,15 +348,15 @@
 }
 
 @media only screen and (max-width: 600px) {
-  .auth-buttons {
+  .auth-buttons, .user-profile {
     display: none; /* Hide auth buttons on mobile */
   }
 
-  .mobile-auth-buttons{
+  .mobile-auth-buttons, .mobile-user-profile{
     display: block;
   }
 
-  .mobile-auth-buttons button{
+  .mobile-auth-buttons, .mobile-user-profile button{
     margin-left: 20px;
     color: #fff;
     border: none;
@@ -358,6 +366,38 @@
     padding: 10px 20px;
     margin: 0 auto;
     margin-top: 10px;
+  }
+
+  .story-card {
+    flex: 0 0 auto;
+    width: 150px;
+    height: 100px;
+    background-color: #f0f0f0;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 1.2rem;
+  }
+
+  .modal-content h2{
+    margin-top: 40px;
+    font-size: 1em;
+  }
+
+  .form-group{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 15px;
+  }
+
+  .stories-list {
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
   }
 
 

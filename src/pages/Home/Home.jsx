@@ -48,6 +48,7 @@ const Home = () => {
 
     // State to track whether the menu is open or closed
     const [menuOpen, setMenuOpen] = useState(false);
+    const [isOpen, setOpen] = useState(false)
 
     const navigate = useNavigate();
   
@@ -153,7 +154,9 @@ const Home = () => {
     };
 
     const handleRegisterClick = () => {
+        closeSideBar();
         setShowRegistrationModal(true);
+
     };
 
     const handleRegistrationCloseModal = () => {
@@ -164,6 +167,7 @@ const Home = () => {
     };
 
     const handleLoginClick = () => {
+        closeSideBar();
         setShowLoginModal(true);
     };
 
@@ -253,14 +257,15 @@ const Home = () => {
       }
     };
 
-    const handleShowLessClick = () => {
-      setShowAllFoodStories(false);
-      console.log("show less");
-    }
 
-    const handleCloseMenuClick = () => {
-      setMenuOpen(false); // Close the menu by updating the state
-    };
+
+    const handleIsOpen = () => {
+      setOpen(!isOpen)
+    }
+  
+    const closeSideBar = () => {
+      setOpen(false)
+    }
   
 
 
@@ -272,7 +277,8 @@ const Home = () => {
           <h1>SwipTory</h1>
         </div>
         {isLoggedIn?(
-          <div className="user-profile">
+          <>
+           <div className="user-profile">
             <button className="profile-button" onClick={redirectToBookmarks}>
               <FaBookmark size={15} style={{ marginRight: '5px' }}  />
               Bookmarks
@@ -284,6 +290,32 @@ const Home = () => {
               <button className="menu-button" onClick={handleLogout}>Logout</button>
             </Menu>
           </div>
+          <div className="mobile-user-profile">
+            <Menu 
+              isOpen={isOpen}
+              onOpen={handleIsOpen}
+              onClose={handleIsOpen}
+              width={'100%'} 
+              height={'50%'} 
+              right
+            >
+              <button className="close-menu-button" onClick={()=>closeSideBar()}>X</button>
+              <img src={user.profilePic} alt="Profile" className="profile-picture" />
+              <p className="username">{user.username}</p>
+              <button className="your-story-button" onClick={handleLogout}>Your Story</button> 
+              <button className="profile-button" onClick={redirectToBookmarks}>
+                <FaBookmark size={15} style={{ marginRight: '5px' }}  />
+                Bookmarks
+              </button>
+              <button className="profile-button" onClick={handleAddStoryClick}>Add Story</button>
+             
+              <button className="menu-button" onClick={handleLogout}>Logout</button>
+
+            </Menu>
+
+          </div>
+          </>
+         
         ):(
           <>
              <div className="auth-buttons">
@@ -291,8 +323,11 @@ const Home = () => {
               <button className="login-button" onClick={handleLoginClick}>Sign In</button>
             </div>
             <div className="mobile-auth-buttons">
-              <Menu isOpen={menuOpen} width={'100%'} height={'50%'} right>
-                <button className="close-menu-button" onClick={handleCloseMenuClick}>X</button>
+              <Menu isOpen={isOpen}
+                onOpen={handleIsOpen}
+                onClose={handleIsOpen}
+                width={'100%'} height={'50%'} right>
+                {/* <button className="close-menu-button" onClick={handleCloseMenuClick}>X</button> */}
                 <button onClick={handleLoginClick}>Login</button>
                 <button onClick={handleRegisterClick}>Register</button>
                 
@@ -480,7 +515,7 @@ const Home = () => {
       <section id="categories" className="categories">
         {(selectedCategory === 'All' || selectedCategory === 'Food') && (
             <div className="category">
-              <h2>Food</h2>
+              <h2>Top Stories About Food</h2>
               {categoryStories.filter((story) => story.category === 'Food').length > 0 ? (
               <div className="stories-list">
                 {showAllFoodStories?
@@ -532,7 +567,7 @@ const Home = () => {
         )}
         {(selectedCategory === 'All' || selectedCategory === 'Health and Fitness') && (
             <div className="category">
-            <h2>Health and Fitness</h2>
+            <h2>Top Stories About Health and Fitness</h2>
             {
             categoryStories.filter((story) => story.category === 'Health and Fitness').length > 0 ? (
               <div className="stories-list">
@@ -589,7 +624,7 @@ const Home = () => {
         )}
         {(selectedCategory === 'All' || selectedCategory === 'Travel') && (
             <div className="category">
-            <h2>Travel</h2>
+            <h2>Top Stories About Travel</h2>
             {categoryStories.filter((story) => story.category === 'Travel').length > 0 ? (
               <div className="stories-list">
                 {showAllTravelStories?
@@ -644,7 +679,7 @@ const Home = () => {
         )}
         {(selectedCategory === 'All' || selectedCategory === 'Movies') && (
             <div className="category">
-            <h2>Movies</h2>
+            <h2>Top Stories About Movies</h2>
             {categoryStories.filter((story) => story.category === 'Movies').length > 0 ? (
               <div className="stories-list">
                 {showAllMoviesStories?
@@ -699,7 +734,7 @@ const Home = () => {
         )}
         {(selectedCategory === 'All' || selectedCategory === 'Education') && (
             <div className="category">
-            <h2>Education</h2>
+            <h2>Top Stories About Education</h2>
             {categoryStories.filter((story) => story.category === 'Education').length > 0 ? (
               <div className="stories-list">
                 {showAllEducationStories?
