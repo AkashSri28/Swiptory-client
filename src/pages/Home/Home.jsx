@@ -266,6 +266,10 @@ const Home = () => {
     const closeSideBar = () => {
       setOpen(false)
     }
+
+    const redirectToHome = () =>{
+      navigate('/')
+    }
   
 
 
@@ -273,7 +277,7 @@ const Home = () => {
     <div className="home">
       {/* Header */}
       <header className="header">
-        <div className="logo">
+        <div onClick={redirectToHome} className="logo">
           <h1>SwipTory</h1>
         </div>
         {isLoggedIn?(
@@ -291,17 +295,41 @@ const Home = () => {
             </Menu>
           </div>
           <div className="mobile-user-profile">
-            <Menu 
+            {/* <Menu 
               isOpen={isOpen}
-              onOpen={handleIsOpen}
-              onClose={handleIsOpen}
+              // onOpen={handleIsOpen}
+              // onClose={handleIsOpen}
               width={'100%'} 
               height={'50%'} 
               right
             >
               <button className="close-menu-button" onClick={()=>closeSideBar()}>X</button>
-              <img src={user.profilePic} alt="Profile" className="profile-picture" />
-              <p className="username">{user.username}</p>
+              <div className="user-info">
+                <img src={user.profilePic} alt="Profile" className="profile-picture" />
+                <p className="username">{user.username}</p>
+              </div>
+              <button className="your-story-button" onClick={handleLogout}>Your Story</button> 
+              <button className="profile-button" onClick={redirectToBookmarks}>
+                <FaBookmark size={15} style={{ marginRight: '5px' }}  />
+                Bookmarks
+              </button>
+              <button className="profile-button" onClick={handleAddStoryClick}>Add Story</button>
+             
+              <button className="menu-button" onClick={handleLogout}>Logout</button>
+
+            </Menu> */}
+
+           
+
+            <Menu 
+              isOpen={isOpen}
+              width={'100%'} 
+              right>
+              {/* <button className="close-menu-button" onClick={()=>closeSideBar()}>X</button> */}
+              <div className="user-info">
+                <img src={user.profilePic} alt="Profile" className="profile-picture" />
+                <p className="username">{user.username}</p>
+              </div>
               <button className="your-story-button" onClick={handleLogout}>Your Story</button> 
               <button className="profile-button" onClick={redirectToBookmarks}>
                 <FaBookmark size={15} style={{ marginRight: '5px' }}  />
@@ -312,6 +340,7 @@ const Home = () => {
               <button className="menu-button" onClick={handleLogout}>Logout</button>
 
             </Menu>
+           
 
           </div>
           </>

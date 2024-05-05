@@ -88,6 +88,10 @@ function BookmarkPage() {
         setShowEditStoryModal(true);
     };
 
+    const redirectToHome = () =>{
+        navigate('/')
+      }
+
     
 
   return (
@@ -95,7 +99,7 @@ function BookmarkPage() {
 
         {/* Header */}
         <header className="header">
-            <div className="logo">
+            <div onClick={redirectToHome} className="logo">
             <h1>SwipTory</h1>
             </div>
             {isLoggedIn?(
@@ -134,10 +138,12 @@ function BookmarkPage() {
                         <div key={index} className="story" onClick={() => handleStoryClick(story)}>
                             
                             <div className="story-content">
+
+                                <img src={story.forms[0].image} alt={story.forms[0].heading} />
+                                
+                                <h3>{story.forms[0].heading}</h3>
+                                <p>{story.forms[0].description}</p>
                             
-                            <h3>{story.forms[0].heading}</h3>
-                            <p>{story.forms[0].description}</p>
-                            <img src={story.forms[0].image} alt={story.forms[0].heading} />
                             {/* <p>Category: {story.forms[0].category}</p> */}
                             </div>
                             {isLoggedIn && story.user === user._id && (

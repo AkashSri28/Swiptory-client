@@ -356,7 +356,7 @@
     display: block;
   }
 
-  .mobile-auth-buttons, .mobile-user-profile button{
+  .mobile-auth-buttons button, .mobile-user-profile button{
     margin-left: 20px;
     color: #fff;
     border: none;
@@ -366,6 +366,17 @@
     padding: 10px 20px;
     margin: 0 auto;
     margin-top: 10px;
+  }
+
+  .bm-menu-wrap {
+    display: block;
+    top: 70px !important;
+  }
+
+  .user-info {
+    display: flex !important; 
+    justify-content: center;
+    align-items: center;
   }
 
   .story-card {
@@ -399,6 +410,8 @@
     flex-direction: column;
     padding: 25px;
   }
+
+
 
 
 
