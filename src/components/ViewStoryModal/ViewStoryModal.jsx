@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import './ViewStoryModal.css';
 import { FiSend } from "react-icons/fi";
 import { FaBookmark, FaHeart } from "react-icons/fa";
+import { GrNext, GrPrevious } from "react-icons/gr";
 import { IoMdClose } from "react-icons/io";
 import axios from 'axios';
 import { useAuth } from '../../context/authContext';
@@ -241,8 +242,8 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
                
             </div>
             <div className="navigation">
-                <button onClick={handlePrevious}><img src='previous.png'/></button>
-                <button onClick={handleNext}><img src='next.png' /></button>
+                <button onClick={handlePrevious}><GrPrevious size={100}/></button>
+                <button onClick={handleNext}><GrNext size={100}/></button>
             </div>
             <ToastContainer position="top-center" autoClose={2000} hideProgressBar={true} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
         </div>
