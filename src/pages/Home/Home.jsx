@@ -491,7 +491,7 @@ const Home = () => {
       </section>
 
       {/* Your Stories */}
-      {isLoggedIn && (
+      {isLoggedIn && selectedCategory === 'All' && (
           <section id="user-stories" className="user-stories">
               <h2>Your Stories</h2>
               {userStories.length > 0?(

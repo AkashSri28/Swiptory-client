@@ -2,15 +2,25 @@ import './App.css';
 import BookmarkPage from './pages/BookmarkPage/BookmarkPage';
 import Home from './pages/Home/Home';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from './context/authContext';
 import PublicStory from './pages/PublicStory/PublicStory';
 import YourStories from './pages/YourStories/YourStories';
+import { useEffect, useState } from 'react';
 
 
 function App() {
-  const {isLoggedIn} = useAuth();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  console.log(isLoggedIn)
+  useEffect(() => {
+    // Check if the user is already logged in
+    const token = localStorage.getItem('token'); // Assuming you store the token in local storage
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  console.log(isLoggedIn);
 
   return (
     <Router>

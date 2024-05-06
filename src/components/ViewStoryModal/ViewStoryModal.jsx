@@ -26,6 +26,11 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
     const {token, isLoggedIn} = useAuth();
 
     useEffect(() => {
+        // Set currentForm to 0 when the modal is opened
+        setCurrentForm(0);
+    }, [isOpen]);
+
+    useEffect(() => {
         if (token) {
             // Check if story is liked by the user
             checkStoryLiked();
@@ -34,6 +39,10 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
             setLikeCount(story?.likes);
         }
     }, [token, story]);
+
+    const [currentFormIndex, setCurrentFormIndex] = useState(0);
+
+
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -65,6 +74,8 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
             return () => clearInterval(timer);
         }
     }, [currentForm, story]);
+
+    
 
     const checkStoryLiked = async () => {
         if(!story){
@@ -110,14 +121,38 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
 
     const handleNext = () => {
         if (story && story.forms && story.forms.length > 0) {
-            setCurrentForm((prevForm) => (prevForm === story.forms.length - 1 ? 0 : prevForm + 1));
+            // setCurrentForm((prevForm) => (prevForm === story.forms.length - 1 ? 0 : prevForm + 1));
+            // setProgress(0);
+
+            setCurrentForm(prevForm => {
+                // Check if the current form is the last form
+                if (prevForm === story.forms.length - 1) {
+                    // If it is the last form, do not change the current form
+                    return prevForm;
+                } else {
+                    // Otherwise, move to the next form
+                    return prevForm + 1;
+                }
+            });
             setProgress(0);
         }
     };
   
     const handlePrevious = () => {
         if (story && story.forms && story.forms.length > 0) {
-            setCurrentForm((prevForm) => (prevForm === 0 ? story.forms.length - 1 : prevForm - 1));
+            // setCurrentForm((prevForm) => (prevForm === 0 ? story.forms.length - 1 : prevForm - 1));
+            // setProgress(0);
+
+            setCurrentForm(prevForm => {
+                // Check if the current form is the last form
+                if (prevForm === 0) {
+                    // If it is the last form, do not change the current form
+                    return prevForm;
+                } else {
+                    // Otherwise, move to the next form
+                    return prevForm - 1;
+                }
+            });
             setProgress(0);
         }
     };

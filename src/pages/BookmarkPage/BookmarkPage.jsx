@@ -116,7 +116,7 @@ function BookmarkPage() {
 
         {/* Header */}
         <header className="header">
-            <div onClick={redirectToHome} className="logo">
+            <div onClick={()=>redirectToHome()} className="logo">
             <h1>SwipTory</h1>
             </div>
             {isLoggedIn?(
