@@ -7,6 +7,7 @@ import AddStoryModal from '../../components/AddModalStory/AddStoryModal';
 import { FaRegEdit } from "react-icons/fa";
 import EditStoryModal from '../../components/EditStoryModal/EditStoryModal';
 import ViewStoryModal from '../../components/ViewStoryModal/ViewStoryModal';
+import { FaBookmark } from "react-icons/fa";
 
 function BookmarkPage() {
     const [bookmarkedStories, setBookmarkedStories] = useState([]);
@@ -21,6 +22,8 @@ function BookmarkPage() {
 
     const [showRegistrationModal, setShowRegistrationModal] = useState(false);
     const [showLoginModal, setShowLoginModal] = useState(false);
+
+    const [isOpen, setOpen] = useState(false)
 
     // Fetch bookmarked stories from the backend when the component mounts
     const fetchBookmarkedStories = async () => {
@@ -51,6 +54,7 @@ function BookmarkPage() {
       }
 
       const handleAddStoryClick = () => {
+        closeSideBar();
         setShowAddStoryModal(true);
       };
 
@@ -92,6 +96,19 @@ function BookmarkPage() {
         navigate('/')
       }
 
+      const handleIsOpen = () => {
+        setOpen(!isOpen)
+      }
+
+      const redirectToYourStory = ()=>{
+        navigate('/your-stories')
+      }
+
+      const closeSideBar = () => {
+        setOpen(false)
+      }
+  
+
     
 
   return (
@@ -103,8 +120,12 @@ function BookmarkPage() {
             <h1>SwipTory</h1>
             </div>
             {isLoggedIn?(
+            <>
             <div className="user-profile">
-                <button className="profile-button" onClick={redirectToBookmarks}>Bookmarks</button>
+                <button className="profile-button" onClick={redirectToBookmarks}>
+                <FaBookmark size={15} style={{ marginRight: '5px' }}  />
+                Bookmarks
+                </button>
                 <button className="profile-button" onClick={handleAddStoryClick}>Add Story</button>
                 <img src={user.profilePic} alt="Profile" className="profile-picture" />
                 <Menu isOpen={false} width={ '300px' } right>
@@ -112,11 +133,80 @@ function BookmarkPage() {
                 <button className="menu-button" onClick={handleLogout}>Logout</button>
                 </Menu>
             </div>
-            ):(
-            <div className="auth-buttons">
-                <button className="register-button" onClick={handleRegisterClick}>Register Now</button>
-                <button className="login-button" onClick={handleLoginClick}>Login</button>
+            <div className="mobile-user-profile">
+                {/* <Menu 
+                isOpen={isOpen}
+                // onOpen={handleIsOpen}
+                // onClose={handleIsOpen}
+                width={'100%'} 
+                height={'50%'} 
+                right
+                >
+                <button className="close-menu-button" onClick={()=>closeSideBar()}>X</button>
+                <div className="user-info">
+                    <img src={user.profilePic} alt="Profile" className="profile-picture" />
+                    <p className="username">{user.username}</p>
+                </div>
+                <button className="your-story-button" onClick={handleLogout}>Your Story</button> 
+                <button className="profile-button" onClick={redirectToBookmarks}>
+                    <FaBookmark size={15} style={{ marginRight: '5px' }}  />
+                    Bookmarks
+                </button>
+                <button className="profile-button" onClick={handleAddStoryClick}>Add Story</button>
+                
+                <button className="menu-button" onClick={handleLogout}>Logout</button>
+
+                </Menu> */}
+
+            
+
+                <Menu 
+                isOpen={isOpen}
+                onOpen={handleIsOpen}
+                onClose={handleIsOpen}
+                width={'100%'} 
+                right>
+                {/* <button className="close-menu-button" onClick={()=>closeSideBar()}>X</button> */}
+                <div className="user-info">
+                    <img src={user.profilePic} alt="Profile" className="profile-picture" />
+                    <p className="username">{user.username}</p>
+                </div>
+                <button className="your-story-button" onClick={redirectToYourStory}>Your Story</button> 
+                <button className="profile-button" onClick={redirectToBookmarks}>
+                    <FaBookmark size={15} style={{ marginRight: '5px' }}  />
+                    Bookmarks
+                </button>
+                <button className="profile-button" onClick={handleAddStoryClick}>Add Story</button>
+                
+                <button className="menu-button" onClick={handleLogout}>Logout</button>
+
+                </Menu>
+            
+
             </div>
+            </>
+            
+            ):(
+            <>
+                <div className="auth-buttons">
+                <button className="register-button" onClick={handleRegisterClick}>Register Now</button>
+                <button className="login-button" onClick={handleLoginClick}>Sign In</button>
+                </div>
+                <div className="mobile-auth-buttons">
+                <Menu isOpen={isOpen}
+                    onOpen={handleIsOpen}
+                    onClose={handleIsOpen}
+                    width={'100%'} height={'50%'} right>
+                    {/* <button className="close-menu-button" onClick={handleCloseMenuClick}>X</button> */}
+                    <button onClick={handleLoginClick}>Login</button>
+                    <button onClick={handleRegisterClick}>Register</button>
+                    
+
+                </Menu>
+                </div>
+            
+            </>
+
             )}
         </header>
 

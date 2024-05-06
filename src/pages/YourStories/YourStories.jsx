@@ -66,6 +66,9 @@ function YourStories() {
     };
 
     const handleAddStoryClick = () => {
+        console.log(isOpen)
+        closeSideBar();
+        console.log(isOpen)
         setShowAddStoryModal(true);
       };
 
@@ -88,13 +91,7 @@ function YourStories() {
         setShowLoginModal(true);
     };
 
-    const handleIsOpen = () => {
-        setOpen(!isOpen)
-      }
     
-      const closeSideBar = () => {
-        setOpen(false)
-      }
 
       const handleAddStoryCloseModal = () => {
         fetchUserStories();
@@ -123,6 +120,15 @@ function YourStories() {
         setSelectedStory(story);
         setShowEditStoryModal(true);
     };
+
+    const handleIsOpen = () => {
+        setOpen(!isOpen)
+      }
+    
+      const closeSideBar = () => {
+        setOpen(false)
+      }
+
   
 
 
@@ -175,6 +181,8 @@ function YourStories() {
 
             <Menu 
               isOpen={isOpen}
+              onOpen={handleIsOpen}
+              onClose={handleIsOpen}
               width={'100%'} 
               right>
               {/* <button className="close-menu-button" onClick={()=>closeSideBar()}>X</button> */}

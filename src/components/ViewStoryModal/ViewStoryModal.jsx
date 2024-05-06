@@ -67,6 +67,9 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
     }, [currentForm, story]);
 
     const checkStoryLiked = async () => {
+        if(!story){
+            return
+        }
         try {
             const response = await axios.get(`https://swiptory-server-fm7r.onrender.com/api/story/checkLike/${story._id}`, {
                 headers: {
@@ -85,6 +88,9 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
     };
 
     const checkStoryBookmarked = async () => {
+        if(!story){
+            return;
+        }
         try {
             const response = await axios.get(`https://swiptory-server-fm7r.onrender.com/api/user/checkBookmark/${story._id}`, {
                 headers: {
@@ -135,6 +141,7 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
             if (response.data.success) {
                 console.log("Success", response.data.message)
                 setLikeCount(response.data.likeCount);
+                console.log(response.data.likeCount)
                 checkStoryLiked();
             }
             else{
@@ -190,6 +197,22 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
             .catch(error => {
                 console.error('Error copying public link to clipboard:', error);
             });
+    };
+
+    const handleTap = (e) => {
+        const containerWidth = e.currentTarget.offsetWidth; // Width of the container
+        const tapX = e.clientX - e.currentTarget.getBoundingClientRect().left; // X coordinate of the tap relative to the container
+    
+        // Calculate the threshold for left and right sides (you can adjust this threshold as needed)
+        const threshold = 0.3; // For example, 30% of the container width
+    
+        if (tapX < containerWidth * threshold) {
+            // Tapped on the left side
+            handlePrevious();
+        } else if (tapX > containerWidth * (1 - threshold)) {
+            // Tapped on the right side
+            handleNext();
+        }
     };
 
   return (
@@ -267,7 +290,7 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
 
 
                 {story && story.forms && story.forms.length > 0 && (
-                    <div>
+                    <div onClick={handleTap}>
                         <img src={story.forms[currentForm].image} alt={story.forms[currentForm].heading} />
                         <h3>{story.forms[currentForm].heading}</h3>
                         <p>{story.forms[currentForm].description}</p>
