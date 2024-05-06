@@ -194,6 +194,7 @@ const Home = () => {
     };
 
     const handleAddStoryClick = () => {
+      closeSideBar();
       setShowAddStoryModal(true);
     };
 
@@ -326,6 +327,8 @@ const Home = () => {
 
             <Menu 
               isOpen={isOpen}
+              onOpen={handleIsOpen}
+              onClose={handleIsOpen}
               width={'100%'} 
               right>
               {/* <button className="close-menu-button" onClick={()=>closeSideBar()}>X</button> */}

@@ -95,6 +95,7 @@ const AddStoryModal = ({ isOpen, onClose }) => {
             <div className="add-slides-text">
                 Add up to 6 slides
             </div>
+            <p className='mobile-add-story-heading'>Add story to feed</p>
             <div className="story-form">
 
               <div className="form-tabs">

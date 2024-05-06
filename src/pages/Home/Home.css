@@ -367,10 +367,9 @@
     margin: 0 auto;
     margin-top: 10px;
   }
-
-  .bm-menu-wrap {
+  
+  .mobile-user-profile .bm-menu-wrap {
     display: block;
-    top: 70px !important;
   }
 
   .user-info {

@@ -39,7 +39,7 @@ function BookmarkPage() {
 
     useEffect(() => {
         fetchBookmarkedStories();
-    }, [bookmarkedStories]);
+    }, []);
 
     const redirectToBookmarks = () => {
         navigate('/bookmarks');
@@ -78,6 +78,7 @@ function BookmarkPage() {
 
     const handleCloseViewStoryModal = () => {
         setShowViewStoryModal(false);
+        fetchBookmarkedStories();
         setSelectedStory(null);
     };
 
