@@ -40,8 +40,6 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
         }
     }, [token, story]);
 
-    const [currentFormIndex, setCurrentFormIndex] = useState(0);
-
 
 
     useEffect(() => {
