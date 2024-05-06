@@ -147,8 +147,13 @@ function BookmarkPage() {
                             {/* <p>Category: {story.forms[0].category}</p> */}
                             </div>
                             {isLoggedIn && story.user === user._id && (
-                            <button className="edit-button" onClick={(e) => { e.stopPropagation(); handleEditStory(story); }}><FaRegEdit /> Edit</button>
-                            )}
+                                <button className="edit-button" onClick={(e) => { 
+                                    e.preventDefault();
+                                    e.stopPropagation(); 
+                                    handleEditStory(story); 
+                                }}
+                                ><FaRegEdit /> Edit</button>
+                                )}
                             
                         </div>
                     ))}

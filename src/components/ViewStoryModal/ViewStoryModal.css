@@ -70,10 +70,6 @@
      
 }
 
-
-.view-story-modal > div {
-}
-
 .view-story-modal h3 {
     color: #fff;
     text-align: left;
@@ -127,8 +123,10 @@
 
 .progress-bar-container {
     height: 5px;
-    background-color: #333;
+    background-color: #000;
     margin-top: 20px;
+    /* display: flex; */
+    width: 100%;
 }
 
 /* .progress-bar {
@@ -138,8 +136,14 @@
 } */
 .progress-bar {
     height: 5px;
-    background-color: #fff;
-}
+    background-color: rgba(217, 217, 217, 0.5);
+    margin-right: 5px;
+    }
+
+    .progress-bar-fill{
+        background-color: #fff;
+        height: 5px;
+    }
 
 .interactions {
     display: flex;

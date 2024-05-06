@@ -414,6 +414,12 @@
     display: none;
   }
 
+  .edit-button{
+    bottom: 5px;
+    cursor: pointer;
+
+  }
+
 
 
 

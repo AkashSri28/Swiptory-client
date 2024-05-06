@@ -32,10 +32,12 @@ function YourStories() {
 
 
     useEffect(() => {
-        if (isLoggedIn) {
+        console.log('fetch')
+        if (token) {
+            console.log('fetch stories')
             fetchUserStories();
         }
-    }, []);
+    }, [token]);
 
     
     
@@ -48,6 +50,7 @@ function YourStories() {
                 }
               });
               setUserStories(response.data.stories);
+              console.log(response.data.stories);
           } catch (error) {
               console.error('Error fetching user stories:', error);
           }
@@ -232,7 +235,7 @@ function YourStories() {
         <h2>Your Stories</h2>
             {/* Your Stories */}
             {token && (
-                <section id="user-stories" className="user-stories">
+                <section className="user-stories">
                     <div className="stories-list">
                         {userStories.map((story, index) => (
                             <div key={index} className="story" onClick={() => handleStoryClick(story)}>
@@ -247,7 +250,12 @@ function YourStories() {
                                 {/* <p>Category: {story.forms[0].category}</p> */}
                                 </div>
                                 {isLoggedIn && story.user === user._id && (
-                                <button className="edit-button" onClick={(e) => { e.stopPropagation(); handleEditStory(story); }}><FaRegEdit /> Edit</button>
+                                <button className="edit-button" onClick={(e) => { 
+                                    e.preventDefault();
+                                    e.stopPropagation(); 
+                                    handleEditStory(story); 
+                                }}
+                                ><FaRegEdit /> Edit</button>
                                 )}
                                 
                             </div>

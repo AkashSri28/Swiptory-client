@@ -566,8 +566,13 @@ const Home = () => {
 
                       </div>
                       {isLoggedIn && story.user === user._id && (
-                          <button className="edit-button"><FaRegEdit /> Edit</button>
-                        )}
+                        <button className="edit-button" onClick={(e) => { 
+                          e.preventDefault();
+                          e.stopPropagation(); 
+                          handleEditStory(story); 
+                        }}
+                      ><FaRegEdit /> Edit</button>
+                      )}
                     </div>
                   ))):(
                     categoryStories
@@ -583,8 +588,13 @@ const Home = () => {
 
                           </div>
                           {isLoggedIn && story.user === user._id && (
-                              <button className="edit-button"><FaRegEdit /> Edit</button>
-                            )}
+                          <button className="edit-button" onClick={(e) => { 
+                              e.preventDefault();
+                              e.stopPropagation(); 
+                              handleEditStory(story); 
+                          }}
+                          ><FaRegEdit /> Edit</button>
+                          )}
                         </div>
                       ))
                   )
@@ -620,8 +630,13 @@ const Home = () => {
   
                       </div>
                       {isLoggedIn && story.user === user._id && (
-                          <button className="edit-button"><FaRegEdit /> Edit</button>
-                        )}
+                        <button className="edit-button" onClick={(e) => { 
+                            e.preventDefault();
+                            e.stopPropagation(); 
+                            handleEditStory(story); 
+                        }}
+                        ><FaRegEdit /> Edit</button>
+                      )}
                     </div>
                   ))
                 ):(
@@ -639,7 +654,12 @@ const Home = () => {
   
                       </div>
                       {isLoggedIn && story.user === user._id && (
-                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        <button className="edit-button" onClick={(e) => { 
+                            e.preventDefault();
+                            e.stopPropagation(); 
+                            handleEditStory(story); 
+                        }}
+                        ><FaRegEdit /> Edit</button>
                         )}
                     </div>
                   ))
@@ -676,7 +696,12 @@ const Home = () => {
                         
                       </div>
                       {isLoggedIn && story.user === user._id && (
-                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        <button className="edit-button" onClick={(e) => { 
+                            e.preventDefault();
+                            e.stopPropagation(); 
+                            handleEditStory(story); 
+                        }}
+                        ><FaRegEdit /> Edit</button>
                         )}
                     </div>
                   ))
@@ -695,7 +720,12 @@ const Home = () => {
                         
                       </div>
                       {isLoggedIn && story.user === user._id && (
-                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        <button className="edit-button" onClick={(e) => { 
+                            e.preventDefault();
+                            e.stopPropagation(); 
+                            handleEditStory(story); 
+                        }}
+                        ><FaRegEdit /> Edit</button>
                         )}
                     </div>
                   ))
@@ -731,7 +761,12 @@ const Home = () => {
                        
                       </div>
                       {isLoggedIn && story.user === user._id && (
-                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        <button className="edit-button" onClick={(e) => { 
+                            e.preventDefault();
+                            e.stopPropagation(); 
+                            handleEditStory(story); 
+                        }}
+                        ><FaRegEdit /> Edit</button>
                         )}
                     </div>
                   ))
@@ -750,7 +785,12 @@ const Home = () => {
                        
                       </div>
                       {isLoggedIn && story.user === user._id && (
-                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        <button className="edit-button" onClick={(e) => { 
+                            e.preventDefault();
+                            e.stopPropagation(); 
+                            handleEditStory(story); 
+                        }}
+                        ><FaRegEdit /> Edit</button>
                         )}
                     </div>
                   ))
@@ -787,7 +827,12 @@ const Home = () => {
                       
                       </div>
                       {isLoggedIn && story.user === user._id && (
-                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        <button className="edit-button" onClick={(e) => { 
+                            e.preventDefault();
+                            e.stopPropagation(); 
+                            handleEditStory(story); 
+                        }}
+                        ><FaRegEdit /> Edit</button>
                         )}
                     </div>
                   ))
@@ -807,7 +852,12 @@ const Home = () => {
                       
                       </div>
                       {isLoggedIn && story.user === user._id && (
-                          <button className="edit-button"><FaRegEdit /> Edit</button>
+                        <button className="edit-button" onClick={(e) => { 
+                            e.preventDefault();
+                            e.stopPropagation(); 
+                            handleEditStory(story); 
+                        }}
+                        ><FaRegEdit /> Edit</button>
                         )}
                     </div>
                   ))

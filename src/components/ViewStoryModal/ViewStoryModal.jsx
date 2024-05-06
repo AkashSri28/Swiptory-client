@@ -196,14 +196,19 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
     <>
         {isOpen && (<div className="view-modal">
             <div className="view-story-modal">
+
                 <div className="progress-bar-container" style={{ display: 'flex' }}>
                     {story && story.forms && story.forms.length > 0 && (
                         story.forms.map((form, index) => (
-                            <div key={index} className="progress-bar" style={{ width: `${storyProgress[index]}%`, flex: '1', marginRight: '5px' }}></div>
+                            <div key={index} className="progress-bar" style={{width: '100%'}}>
+                                <div key={index} className="progress-bar-fill" style={{ width: `${storyProgress[index]}%`, flex: '1', marginRight: '5px' }}></div>
+
+                            </div>
                         ))
                     )}
 
                 </div>
+
 
                 <div className="close-send-buttons">
                     <span className="close-button" onClick={onClose}><IoMdClose size={20}/></span>
@@ -245,7 +250,10 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
                 <div className="progress-bar-container" style={{ display: 'flex' }}>
                     {story && story.forms && story.forms.length > 0 && (
                         story.forms.map((form, index) => (
-                            <div key={index} className="progress-bar" style={{ width: `${storyProgress[index]}%`, flex: '1', marginRight: '5px' }}></div>
+                            <div key={index} className="progress-bar" style={{width: '100%'}}>
+                                <div key={index} className="progress-bar-fill" style={{ width: `${storyProgress[index]}%`, flex: '1', marginRight: '5px' }}></div>
+
+                            </div>
                         ))
                     )}
 
