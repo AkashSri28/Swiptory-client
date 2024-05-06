@@ -411,6 +411,10 @@
     padding: 25px;
   }
 
+  #user-stories {
+    display: none;
+  }
+
 
 
 

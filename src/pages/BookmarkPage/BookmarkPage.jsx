@@ -83,7 +83,6 @@ function BookmarkPage() {
 
     // Function to open the EditStoryModal
     const handleEditStory = (story) => {
-        console.log(story)
         setSelectedStory(story);
         setShowEditStoryModal(true);
     };
@@ -132,7 +131,7 @@ function BookmarkPage() {
         <h2>Your Bookmarks</h2>
         {/* Your Stories */}
         {isLoggedIn && (
-            <section id="user-stories" className="user-stories">
+            <section id="bookmark-stories" className="user-stories">
                 <div className="stories-list">
                     {bookmarkedStories.map((story, index) => (
                         <div key={index} className="story" onClick={() => handleStoryClick(story)}>

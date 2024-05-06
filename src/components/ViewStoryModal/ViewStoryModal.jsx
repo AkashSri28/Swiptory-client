@@ -11,6 +11,7 @@ import { useAuth } from '../../context/authContext';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Stories from 'react-insta-stories';
 
 
 const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
@@ -183,16 +184,7 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
         const publicLink = generatePublicLink(storyId);
         navigator.clipboard.writeText(publicLink)
             .then(() => {
-                toast("URL copied!", {
-                    position: "top-right",
-                    autoClose: 2000,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                });
+                toast("Link copied to clipboard");
                 console.log('uRL copied')
             })
             .catch(error => {
@@ -202,7 +194,7 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
 
   return (
     <>
-        {isOpen && (<div className="modal">
+        {isOpen && (<div className="view-modal">
             <div className="view-story-modal">
                 <div className="progress-bar-container" style={{ display: 'flex' }}>
                     {story && story.forms && story.forms.length > 0 && (
@@ -214,8 +206,8 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
                 </div>
 
                 <div className="close-send-buttons">
-                    <span className="close-button" onClick={onClose}><IoMdClose /></span>
-                    <span className="send-button" onClick={()=>handleSendButtonClick(story._id)}><FiSend /></span>
+                    <span className="close-button" onClick={onClose}><IoMdClose size={20}/></span>
+                    <span className="send-button" onClick={()=>handleSendButtonClick(story._id)}><FiSend size={20}/></span>
                    
                 </div>
 
@@ -231,10 +223,10 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
 
                 <div className="interactions">
                     <button className='bookmark-btn' onClick={()=>handleBookmark(story)}>
-                        <FaBookmark style={{color: isBookmarked? 'blue': 'inherit'}} />
+                        <FaBookmark size={20} style={{color: isBookmarked? 'blue': 'inherit'}} />
                     </button>
                     <button className='like-btn' onClick={()=>handleLike(story)}>
-                        <FaHeart style={{color: isLiked? 'red': 'inherit'}} />
+                        <FaHeart size={20} style={{color: isLiked? 'red': 'inherit'}} />
                         <span> {likeCount}</span>
                     </button>
                 </div>
@@ -246,6 +238,59 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
                 <button onClick={handleNext}><GrNext size={100}/></button>
             </div>
             <ToastContainer position="top-center" autoClose={2000} hideProgressBar={true} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+        </div>
+    )}
+    {isOpen && (<div className="mobile-view-modal">
+            <div className="mobile-view-story-modal">
+                <div className="progress-bar-container" style={{ display: 'flex' }}>
+                    {story && story.forms && story.forms.length > 0 && (
+                        story.forms.map((form, index) => (
+                            <div key={index} className="progress-bar" style={{ width: `${storyProgress[index]}%`, flex: '1', marginRight: '5px' }}></div>
+                        ))
+                    )}
+
+                </div>
+
+                <div className="close-send-buttons">
+                    <span className="close-button" onClick={onClose}><IoMdClose size={20} /></span>
+                    <span className="send-button" onClick={()=>handleSendButtonClick(story._id)}><FiSend size={20} /></span>
+                   
+                </div>
+
+
+                {story && story.forms && story.forms.length > 0 && (
+                    <div>
+                        <img src={story.forms[currentForm].image} alt={story.forms[currentForm].heading} />
+                        <h3>{story.forms[currentForm].heading}</h3>
+                        <p>{story.forms[currentForm].description}</p>
+                        
+                    </div>
+                )}
+
+                <div className="interactions">
+                    <button className='bookmark-btn' onClick={()=>handleBookmark(story)}>
+                        <FaBookmark size={20} style={{color: isBookmarked? 'blue': 'inherit'}} />
+                    </button>
+                    <button className='like-btn' onClick={()=>handleLike(story)}>
+                        <FaHeart size={20} style={{color: isLiked? 'red': 'inherit'}} />
+                        <span> {likeCount}</span>
+                    </button>
+                </div>
+
+               
+            </div>
+            <ToastContainer
+                position="top-center" // Position the toast container at the top center
+                autoClose={2000} // Automatically close after 2000 milliseconds (2 seconds)
+                hideProgressBar={true} // Hide the progress bar
+                newestOnTop={false} // Display newer notifications below older ones
+                closeOnClick={true} // Close the toast when clicked
+                rtl={false} // Set to true for right-to-left languages
+                pauseOnFocusLoss={true} // Pause the toast when the window loses focus
+                draggable={true} // Allow dragging to dismiss the toast
+                pauseOnHover={true} // Pause the toast when hovered
+                
+            />
         </div>
     )}
     </>

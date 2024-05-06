@@ -4,6 +4,7 @@ import Home from './pages/Home/Home';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/authContext';
 import PublicStory from './pages/PublicStory/PublicStory';
+import YourStories from './pages/YourStories/YourStories';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
        <div className="App">
           <Routes>
             <Route path="/" element={<Home/>}/>
+            <Route path="/your-stories" element={<YourStories/>} />
             <Route path="/bookmarks" element={<BookmarkPage/>} />
             <Route path="/story/:id" element={<PublicStory/>} />
           </Routes>

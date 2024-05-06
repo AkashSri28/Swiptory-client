@@ -271,6 +271,9 @@ const Home = () => {
       navigate('/')
     }
   
+    const redirectToYourStory = ()=>{
+      navigate('/your-stories')
+    }
 
 
   return (
@@ -330,7 +333,7 @@ const Home = () => {
                 <img src={user.profilePic} alt="Profile" className="profile-picture" />
                 <p className="username">{user.username}</p>
               </div>
-              <button className="your-story-button" onClick={handleLogout}>Your Story</button> 
+              <button className="your-story-button" onClick={redirectToYourStory}>Your Story</button> 
               <button className="profile-button" onClick={redirectToBookmarks}>
                 <FaBookmark size={15} style={{ marginRight: '5px' }}  />
                 Bookmarks
