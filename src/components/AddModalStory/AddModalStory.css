@@ -151,25 +151,14 @@
     }
 
     form label{
-      font-size: 1em;
+      font-size: 0.8em;
     }
 
-    select {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      width: 100%;
-      box-sizing: border-box;
-      background: transparent;
-      background-image: url('data:image/svg+xml;utf8,<svg fill="%23333333" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-      background-repeat: no-repeat;
-      background-position: calc(100% - 15px) center;
-      background-size: 20px;
-      cursor: pointer;
+    .colon{
+      display: none;
     }
+
+
 
     .category-note{
       display: none;

@@ -121,7 +121,7 @@ const AddStoryModal = ({ isOpen, onClose }) => {
             
           <form>
             <div className="form-group">
-              <label>Heading:</label>
+              <label>Heading<span className='colon'>:</span></label>
               <input
                 type="text"
                 name="heading"
@@ -131,7 +131,7 @@ const AddStoryModal = ({ isOpen, onClose }) => {
               />
             </div>
             <div className="form-group">
-              <label>Description:</label>
+              <label>Description<span className='colon'>:</span></label>
               <textarea
                 name="description"
                 placeholder='Story Description'
@@ -140,7 +140,7 @@ const AddStoryModal = ({ isOpen, onClose }) => {
               ></textarea>
             </div>
             <div className="form-group">
-              <label>Image :</label>
+              <label>Image<span className='colon'>:</span></label>
               <input
                 type="text"
                 name="image"
@@ -151,7 +151,7 @@ const AddStoryModal = ({ isOpen, onClose }) => {
             </div>
             <div className="category-input-container">
               <div className="form-group">
-                <label>Category:</label>
+                <label>Category<span className='colon'>:</span></label>
 
                 <select
                     name="category"
