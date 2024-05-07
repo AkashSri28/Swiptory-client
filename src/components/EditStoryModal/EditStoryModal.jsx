@@ -127,7 +127,7 @@ const EditStoryModal = ({ isOpen, onClose, story }) => {
                 <form>
                     {storyForms.map((form, index) => (
                         <div key={index} className={`form ${index === currentForm ? 'active' : ''}`}>
-                        <div className="form-group">
+                        <div className="form-group-add-story">
                             <label>Heading:</label>
                             <input
                             type="text"
@@ -136,7 +136,7 @@ const EditStoryModal = ({ isOpen, onClose, story }) => {
                             onChange={(e) => handleFormChange(e, index)}
                             />
                         </div>
-                        <div className="form-group">
+                        <div className="form-group-add-story">
                             <label>Description:</label>
                             <textarea
                             name="description"
@@ -144,7 +144,7 @@ const EditStoryModal = ({ isOpen, onClose, story }) => {
                             onChange={(e) => handleFormChange(e, index)}
                             ></textarea>
                         </div>
-                        <div className="form-group">
+                        <div className="form-group-add-story">
                             <label>Image (URL):</label>
                             <input
                             type="text"
@@ -155,7 +155,7 @@ const EditStoryModal = ({ isOpen, onClose, story }) => {
                         </div>
                         </div>
                     ))}
-                    <div className="form-group">
+                    <div className="form-group-add-story">
                         <label>Category:</label>
                         <select
                             name="category"

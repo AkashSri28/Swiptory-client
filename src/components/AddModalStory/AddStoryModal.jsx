@@ -120,7 +120,7 @@ const AddStoryModal = ({ isOpen, onClose }) => {
 
             
           <form>
-            <div className="form-group">
+            <div className="form-group-add-story">
               <label>Heading<span className='colon'>:</span></label>
               <input
                 type="text"
@@ -130,7 +130,7 @@ const AddStoryModal = ({ isOpen, onClose }) => {
                 onChange={(e) => handleInputChange(currentForm, e)}
               />
             </div>
-            <div className="form-group">
+            <div className="form-group-add-story">
               <label>Description<span className='colon'>:</span></label>
               <textarea
                 name="description"
@@ -139,7 +139,7 @@ const AddStoryModal = ({ isOpen, onClose }) => {
                 onChange={(e) => handleInputChange(currentForm, e)}
               ></textarea>
             </div>
-            <div className="form-group">
+            <div className="form-group-add-story">
               <label>Image<span className='colon'>:</span></label>
               <input
                 type="text"
@@ -150,7 +150,7 @@ const AddStoryModal = ({ isOpen, onClose }) => {
               />
             </div>
             <div className="category-input-container">
-              <div className="form-group">
+              <div className="form-group-add-story">
                 <label>Category<span className='colon'>:</span></label>
 
                 <select

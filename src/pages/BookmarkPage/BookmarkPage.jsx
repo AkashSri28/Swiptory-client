@@ -61,6 +61,7 @@ function BookmarkPage() {
     // Function to handle logout
     const handleLogout = () => {
         logout(); 
+        navigate('/')
     };
 
     const handleRegisterClick = () => {

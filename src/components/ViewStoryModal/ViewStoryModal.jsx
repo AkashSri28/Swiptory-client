@@ -37,8 +37,12 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
             // Check if story is bookmarked by the user
             checkStoryBookmarked();
             setLikeCount(story?.likes);
+        }else{
+            setIsBookmarked(false);
+            setIsLiked(false);
+            setLikeCount(story?.likes);
         }
-    }, [token, story]);
+    }, [story]);
 
 
 
@@ -306,7 +310,7 @@ const ViewStoryModal = ({ isOpen, onClose, story, handleLoginClick }) => {
                 <div className="progress-bar-container" style={{ display: 'flex' }}>
                     {story && story.forms && story.forms.length > 0 && (
                         story.forms.map((form, index) => (
-                            <div key={index} className="progress-bar" style={{width: '100%'}}>
+                            <div key={index} className="progress-bar" style={{width: '100%', backgroundColor: index < currentForm ? '#fff' : 'rgba(217, 217, 217, 0.5)'}}>
                                 <div key={index} className="progress-bar-fill" style={{ width: `${storyProgress[index]}%`, flex: '1', marginRight: '5px' }}></div>
 
                             </div>

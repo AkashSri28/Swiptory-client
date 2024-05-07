@@ -74,6 +74,7 @@ function YourStories() {
 
     const handleLogout = () => {
         logout(); 
+        navigate('/');
     };
 
     const redirectToYourStory = ()=>{

@@ -17,19 +17,22 @@
      border: 2px solid #73ABFF;
   }
 
-  .form-group {
-    margin-bottom: 1rem;
-  }
+  .form-group-add-story {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 80%;
+    margin-bottom: 15px;
+}
   
-  .form-group label {
+  .form-group-add-story label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: bold;
   }
 
-  .form-group input[type='text'],
-.form-group input[type='password'],
-.form-group textarea {
+  .form-group-add-story input[type='text'],
+.form-group-add-story input[type='password'],
+.form-group-add-story textarea {
   width: 100%;
   padding: 0.5rem;
   border: 1px solid #ccc;
@@ -42,7 +45,7 @@
   align-items: center;
 }
 
-.form-group select {
+.form-group-add-story select {
   width: 100%; 
   padding: 0.5rem;
   border: 1px solid #ccc;
@@ -51,7 +54,7 @@
   background-color: transparent;
 }
 
-.form-group option{
+.form-group-add-story option{
   background-color: white;
 }
 
